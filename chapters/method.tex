@@ -1,0 +1,33 @@
+\chapter{Methodology}
+
+\section{Data Description}
+As it has been shown in \cite{Hong:2013:TAS:2528282.2528302} correlation values 
+Data obtained from the PIR sensros is binary in nature. 1 indicates occupancy and 0 indicates non occupancy. \\
+First step to determine the sensor location is to cluster the neighboring sensors together. Since neighboring sensors observe the same event, correlation value between the neighboring sensors should be high. So we compute the correlation coefficient of the raw data. To calculate the correlation between the binary data we use  the formula 
+\begin{equation}
+correlation ratio = \frac{a^2}{p_1\times p_2}
+\end{equation}
+a : number of 1’s in the same position in both the data.\\
+P1: number of 1’s in data set 1.\\
+P2:number of 1’s in dataset 2.\\
+
+\section{Feature Extraction}
+Energy feature is computed on 36 sample windows of pir sensor data with 18 samples overlapping between consecutive windows. At sampling frequency of 100ms, window length of 36 corresponds to 3.6s data.
+The energy of bianry signal x(n) is computed as given in \ref{eq:energyEq}.\\
+\begin{equation}
+\label{eq:energyEq}
+E_s = {\sum_{n=-\infty}^{\infty}{|x(n)|}^2}
+\end{equation}
+Energy of PIR signal along with giving the indication that the region is occupied it also gives information about the extent of activity in the region of occupancy. To diffrentiate between the neighboring nodes and non neighboring nodes we use pearson correlation coefficient given by \ref{eq:corrcoeff}. 
+\begin{equation}
+\label{eq:corrcoeff}
+r(x,y)=\frac{\sum_{i=1}^{n}(X_i-\overline{X})(Y_i-\overline{Y})}{\sqrt{\sum_{i=1}^{n}(X_i-\overline{X})^2}\sqrt{\sum_{i=1}^{n}(Y_i-\overline{Y})^2}} \\
+\end{equation}
+X and Y are sensor data stream for sensor X and Y.\\
+\overline{X} and \overline{Y} is the mean value of X and Y respectively.\\
+n is the number of samples in sensor data stream.\\
+
+
+ 
+
+
