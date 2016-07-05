@@ -3,15 +3,23 @@
 \documentclass[11pt,twoside,a4paper,openright]{report}
 
 % math packages
+\usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{subfig}
+ \usepackage{floatrow}
+\usepackage{algorithmicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 % textblocks for title page
 \usepackage[absolute]{textpos}
+\usepackage{tikz}
 
 % use babel for proper hyphenation
 \usepackage[british]{babel}
 \usepackage[numbers]{natbib}
+\usepackage{bytefield}
 
 % Graphics: different for pdflatex or dvi output, choose one
 %%\usepackage[dvips]{graphicx}
@@ -20,7 +28,7 @@
 
 \usepackage{epstopdf}
 \usepackage{rotating}
-\usepackage{subfigure}
+
 
 % FONT
 \usepackage[scaled=.92]{helvet}
@@ -29,13 +37,25 @@
 % for url's use "\url{http://www.google.com/}"
 \usepackage{url}
 \usepackage{hyperref}
+
 \hypersetup{
   colorlinks   = true, %Colours links instead of ugly boxes
   urlcolor     = cyan, %Colour for external hyperlinks
   linkcolor    = cyan, %Colour of internal links
   citecolor   = cyan %Colour of citations
 }
+\usetikzlibrary{shapes,arrows,graphs,positioning,automata,shadows,fit,shapes,decorations.pathreplacing}
+\tikzset{
+    rotate around with nodes/.style args={#1:#2}{
+        rotate around={#1:#2},
+        set node rotation={#1},
+    },
+    rotate with/.style={rotate=\qrrNodeRotation},
+    set node rotation/.store in=\qrrNodeRotation,
+}
 
+\def\algbackskip{\hskip\dimexpr-\algorithmicindent+\labelsep}
+\def\LState{\State \algbackskip}%
 % Information that will be filled in at various points in the report
 \newcommand{\reportTitle}{TODO TITLE}
 \newcommand{\reportAuthor}{Arpan Govindraju}
@@ -53,6 +73,10 @@ TODO GRADUATION COMMITTEE & Delft University of Technology \\
 %ir. dr. D. H. J. Epema           & Delft University of Technology \\ 
 \newcommand{\reportAbstract}{TODO ABSTRACT}
 \newcommand{\reportKeywords}{TODO KEYWORDS}
+%\newtheorem{theorem}{Theorem}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
 
 % For pdflatex
 \pdfinfo{
@@ -123,8 +147,10 @@ TODO GRADUATION COMMITTEE & Delft University of Technology \\
 \include{./chapters/literatureReview}
 
 % CONCLUSIONS AND FUTURE WORK
-\include{./chapters/conclusionsandfuturework}
 \include{./chapters/method}
+\include{./chapters/TestBed}
+\include{./chapters/conclusionsandfuturework}
+
 
 % BIBLIOGRAPHY
 %#define SORTED 1
