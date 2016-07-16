@@ -6,11 +6,14 @@
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{subfig}
+%\usepackage{subfig}
  \usepackage{floatrow}
 \usepackage{algorithmicx}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage[toc,page]{appendix}
+\usepackage{caption}
+\usepackage{subcaption}
 
 % textblocks for title page
 \usepackage[absolute]{textpos}
@@ -18,7 +21,8 @@
 
 % use babel for proper hyphenation
 \usepackage[british]{babel}
-\usepackage[numbers]{natbib}
+\bibliographystyle{unsrtnat}
+\usepackage[numbers,sort&compress]{natbib}
 \usepackage{bytefield}
 
 % Graphics: different for pdflatex or dvi output, choose one
@@ -149,12 +153,13 @@ TODO GRADUATION COMMITTEE & Delft University of Technology \\
 % CONCLUSIONS AND FUTURE WORK
 \include{./chapters/method}
 \include{./chapters/TestBed}
+\include{./chapters/results}
 \include{./chapters/conclusionsandfuturework}
 
 
 % BIBLIOGRAPHY
 %#define SORTED 1
-\bibliographystyle{plainnat}
+%\bibliographystyle{plainnat}
 \bibliography{./bib/mycollection}
 
 
@@ -165,4 +170,3 @@ TODO GRADUATION COMMITTEE & Delft University of Technology \\
 %\include{appendix_a}
 
 \end{document}
-

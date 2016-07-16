@@ -1,10 +1,11 @@
 \chapter{Test Bed}
+\label{chp:testbed}
 
 We setup our testbed in a 8m X 6m office space. Sensors are mounted on the ceiling which is at a height of 3m. The sensors are  placed 2.5m apart in the horizontal direction and 2.2m apart in the vertical direction.  We used  PIR sensor EKMB1101112 from Panasonic. 
 The output of the sensor is binary. With 1 indicating occupancy and 0 if the region is unoccupied.  We use eZ430-RF2500 toolkit which consists of MSP430 micro-controller  and CC2500 multi channel
 RF transceiver which is designed for low power wireless applications. The testbed uses simpliciTI a  a TI proprietary  low-power RF network protocol. To avoid collision we employ CSMA/CA. To decrease
 the packet loss we enable acknowledgment. An acknowledgment is sent from the AP if the packets are received. If no acknowledgment is received by a node, the node retransmits its data a maximum of 
-6 times until an acknowledgment is  received from the AP. In the figure \ref{fig:roomLayout} we can see that the there was a decrease in the packet loss per node. The maximum packet loss before the enabling acknowledgment was 23\%, 
+6 times until an acknowledgment is  received from the AP. In the figure \ref{fig:packetLoss} we can see that the there was a decrease in the packet loss per node. The maximum packet loss before enabling acknowledgment was 23\%, 
 after acknowledgment was enabled maximum packet loss for a node was 2\%.
 \begin{figure}
 \centering
@@ -20,13 +21,25 @@ All the nodes have a local clock running on them. With 1 clock tick correspondin
 
 Since the data is binary we combine 32 samples and transmit the packet every 3.2s. 
 Data packet is an array of 8 bit. The packet structure is as shown in the figure \ref{fig:packetStructure}\\
-\begin{figure}%
-\centering
-\subfloat[Data before ack was enabled]{\includegraphics[width=8cm,height=4cm]{./pics/packetLoss.png}}%
-\qquad
-\subfloat[Data after ack was enabled]{\includegraphics[width=8.5cm,height=4cm]{./pics/dataAfterAck.png}}%
+
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{1\textwidth}
+        \centering
+        \includegraphics[width=8cm,height=4cm]{./pics/packetLoss.png}
+      \caption{Data before ack was enabled}
+       % \label{fig:y equals x}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{1\textwidth}
+        \centering
+        \includegraphics[width=8.5cm,height=4cm]{./pics/dataAfterAck.png}
+        \caption{Data after ack was enabled}
+        %\label{fig:three sin x}
+    \end{subfigure}
 \caption{Data from the test bed. - 1 indicates the lost data , 1 indicates occupancy, 0 indicates unoccupied space}
-\label{fig:roomLayout}
+\label{fig:packetLoss}
 \end{figure}
 
 \begin{figure}
@@ -49,4 +62,4 @@ The transmitted packet is an array of 1 byte. Consisting of 14 bytes of payload.
 \item Data - 32 samples of the PIR sensor.
 \end{itemize}
 
-Data was collected for a span of 2 months, under normal working conditions.
+Data was collected for a span of 2 months. During the course of the evaluation the occupants were notified of data gathering, but were never instructed to behave in any particular way or was there any constrained applied on the activity or the number of people in the room. 
