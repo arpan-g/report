@@ -470,6 +470,35 @@ In VF2 algorithm all the vectors that are used to store data have the following 
 \centering
 \end{figure}
 
+\subsection{Computation Complexity}
+Computational complexity of the VF2 can be classified as depends on two factors: 
+\begin{itemize}
+\item The time required to calculate the feasibility of every SSR's , computation of the node pair mappings.
+\item Number of SSR visited.
+\end{itemize}
+
+According to the authors the former has a time complexity is $O(N)$ . For the latter the authors consider a best case; where only only one of the potential mappings are feasible is $O(N)$ and thus making the total complexity $O(N^2)$. In the worst case, the algorithm has to explore all the states. This can happen when every node is connected to every other node (base graph is a complete graph) and the graph exhibits strong symmetry. The authors show that the complexity in such a condition is $O(N!)$ and thus making the total complexity $O(N!N)$.
+In our case we show the order of complexity for a 8-neighborhood grid. The worst case for such a grid will arise when at every stage of the search tree the algorithm has to explore every possible branch. Since it's a 8-neighborhood grid all the nodes except the ones at the edges will have 8 neighbors. As one of the neighboring node would be the parent node the node at stage $i$ will have $7^î $nodes to explore and stage N there will be $7^n$ possibilities to explore . The total number of states to explore will be given by the sum:\\
+
+\begin{align*}
+1 + 7 + 7^2+ . . . . .+7^i+....7^n\\
+\text{This represents a geometric progression with a= 1, r =7.}\\
+\text{Sum of a geometric progression is given by:}\\
+S_{n}=\frac{a(r^n-1)}{r-1}\\
+S_{n}=\frac{7^{n+1} -1}{7-1} \\
+\text{When n is large}\\
+S_{n} \approx 7^N\\
+\end{align*}
+
+Thus computational complexity is $O(7^NN)$
+
+\begin{figure}
+\includegraphics[scale=0.5]{./pics/tree.png}
+\caption{All the visited states in case of a 8 neighborhood grid with n nodes.}
+\label{fig:ccO}
+
+\end{figure}
+
 \section{Determination of sensor placement}
 \label{ref:rotationalSym}
 After we obtain the various mappings. We need to decide which out of the various mappings gives the actual placement of the sensors on the grid. To identify the correct mapping we compute GCS as explained in section \ref{sec:gcs}. We calculate the grid correlation sum for all the mappings obtained and the mappings which gives the maximum sum will be the actual placement of the sensors on the grid. 
@@ -538,7 +567,7 @@ WGAM_{i,j} =
 
 
 We use $WGAM$ instead of $GAM$ to compute $GCS$ in equation \ref{eq:gridCorrelationSum}. The reasoning behind the use of WGAM matrix instead of the GAM is that the correlation values for the sensor which are closer is higher than the one compared to sensors which are further apart within the sensors overlapping field of view. By assigning weights to the edges in this manner, more importance is given to the edges between the sensors that are closer to the each other. Doing so the sensors which are close by contribute  more to the $GCS$ . 
-Now if we consider arrangement as shown in the figure \ref{fg:ntimes2} and \ref{fig:ntime2Sym} though there $GCS$ remain the same with $GAM$, $GCS$ won't remain the same when $WGAM$ is used. The contribution of the correlation between the sensors placed on the non diagonal edges are more compared to the contribution made by the diagonal edges. Therefore if we place the non diagonally located sensors on the diagonals of the grid $GCS decreases$.
+Now if we consider arrangement as shown in the figure \ref{fg:ntimes2} and \ref{fig:ntime2Sym} though there $GCS$ remain the same with $GAM$, $GCS$ won't remain the same when $WGAM$ is used. The contribution of the correlation between the sensors placed on the non diagonal edges are more compared to the contribution made by the diagonal edges. Therefore if we place the non diagonally located sensors on the diagonals of the grid $GCS$ decreases. Thus by using a weighted grid adjacency matrix we are able to obtain the mapping of the sensors onto the grid upto rotational symmetry.
 
 \begin{figure}
 \begin{floatrow}
@@ -582,8 +611,8 @@ Now if we consider arrangement as shown in the figure \ref{fg:ntimes2} and \ref{
 \end{figure}
 
 
-
-
+\section{Summary}
+In this chapter we describe a method to locate the sensor on the grid making use of sensor data and grid vertices information upto rotational symmetry. In figure \ref{fig:Summary} we summaries the steps involved in the form of a flowchart. 
 
 
 
