@@ -106,7 +106,7 @@ R =
 \end{equation}\\
 r($\alpha$,$\beta$) represents correlation value between the sensor $\alpha$ and $\beta$.\\
 
-Using correlation matrix($R$) and grid adjacency matrix(GAM) we define a quantity called ${Grid Correlation Sum (GCS)}$ as given in the equation \ref{eq:gridCorrelationSum}. GCS represents the sum of correlation value of the sensor pair residing on neighboring vertices of the grid.
+Using correlation matrix($R$) and grid adjacency matrix(GAM) we define a quantity called \textit{Grid Correlation Sum (GCS)} as given in the equation \ref{eq:gridCorrelationSum}. GCS represents the sum of correlation value of the sensor pair residing on neighboring vertices of the grid.
 As the matrices are symmetrical along the diagonals we only consider the elements of the upper triangle of the matrices excluding the diagonal elements. 
 
 \begin{equation}
@@ -125,12 +125,12 @@ To illustrate this consider a sensor grid as shown in the figure \ref{fig:arrang
  It consists of 3 $\times$ 3 grid.  
 GCS for the  the grid is :\\
 \begin{equation*}
-GCS_{1}=\text{r(1,2)+ r(1,4)+...r(2,3)+...r(5,6)+r(6,9)...r(8,9)}
+GCS_{1}=\text{r(1,2)+ r(1,4)+...r(2,3)+...r(5,6)+r(6,9)..+r(8,9)}
 \end{equation*}
 
 Now consider the arrangement shown in figure \ref{fig:arrangement2}, where the position of the sensors 3 and 6 are interchanged\\
 \begin{equation*}
-GCS_{2}=\text{ r(1,2)+r(1,4)+...+\textbf{r(2,6)}+...+\textbf{r(3,5)+r(3,9)}....r(8,9)}
+GCS_{2}=\text{ r(1,2)+r(1,4)+...+\textbf{r(2,6)}+...+\textbf{r(3,5)+r(3,9)}...+r(8,9)}
 \end{equation*}
 
 \begin{figure}[!ht]
@@ -180,14 +180,14 @@ GCS_{2}=\text{ r(1,2)+r(1,4)+...+\textbf{r(2,6)}+...+\textbf{r(3,5)+r(3,9)}....r
 \end{figure}
 
 $GCS_{1}$ will be greater than $GCS_{2}$ as r(2,3) $>$ r(2,6) ,r(5,6)$>$r(3,5) and r(6,9) $>$ r(3,9) as sensors 2 and 6 , 3 and 5, 3 and 9 are non neighboring sensor nodes placed on neighboring vertices. Hence we can say that GCS will be maximum for a  mapping which maps sensors onto the grid accurately.\\
-When the number of sensors is low we can identify the correct mapping by computing the GCS value for all the possible N mappings. As the number of sensors increase the possible mappings to be checked also increases. Hence we need to find a method to reduce the search space.
+When the number of sensors is low we can identify the correct mapping by computing the GCS value for all the possible $N$ mappings. As the number of sensors increase the possible mappings to be checked also increases. Hence we need to find a method to reduce the search space.
 
 \section{Maximum spanning Tree}
 
-Having established a criterion to determine the right arrangement of sensors on the grid from  possible ${N}$ arrangements. The next step is to reduce the search space. For which we compute the maximum spanning tree(MST) for the correlation matrix ${R}$. 
+Having established a criterion to determine the right arrangement of sensors on the grid from  possible ${N}$ arrangements. The next step is to reduce the search space. For which we compute the maximum spanning tree (MST) for the correlation matrix ${R}$. 
 If we consider ${R}$ as an adjacency matrix for a graph ${G}$, then the sensors represents the vertices and the correlation values between the sensors represents the weights of the edges between the corresponding sensors.
-Now if we compute a maximum spanning tree for the graph, then the tree consists of all the sensor nodes connected to atleast one another node by an edge. The MST chooses an edge for every sensor such that the weight of the edge outgoing from the sensor $\alpha$ to sensor $\beta$ is the maximum among all the edges starting from sensor $\alpha$, in graph ${G}$. As the weights represent correlation values it implies that the maximum spanning tree connects a node to another with which it has the maximum correlation. As the correlation between the neighboring nodes is maximum we can say that MST connects the neighboring sensors.\\
- To compute the MST we make use of prim's algorithm\cite{BLTJ:BLTJ1515}. As prim's algorithm was originally developed to compute the minimum spanning tree we negate the weights for the correlation matrix and obtain the minimum spanning tree which will represent the maximum spanning tree for the original graph ${G}$. \\
+Now if we compute a maximum spanning tree for the graph, then the tree consists of all the sensor nodes connected to atleast one other node by an edge. The MST chooses an edge for every sensor such that the weight of the edge outgoing from the sensor $\alpha$ to sensor $\beta$ is the maximum among all the edges starting from sensor $\alpha$, in graph ${G}$. As the weights represent correlation values it implies that the maximum spanning tree connects a node to another with which it has the maximum correlation. As the correlation between the neighboring nodes is maximum we can say that MST connects the neighboring sensors.\\
+ To compute the MST we make use of Prim's algorithm\cite{BLTJ:BLTJ1515}. As Prim's algorithm was originally developed to compute the minimum spanning tree we negate the weights for the correlation matrix and obtain the minimum spanning tree which will represent the maximum spanning tree for the original graph ${G}$. \\
 As the sensors are placed on the grid and there exists an edge between the neighboring vertices of the grid. The MST over ${R}$ represents one of the spanning tree for the grid. As illustrated in the figure \ref{fig:MST}.
 It is possible that for a given grid there may be several spanning trees with the same structure. 
 Figure \ref{fig:variousMappings} shows few of the spanning tree similar to the MST obtained for the correlation matrix.
@@ -357,21 +357,19 @@ When we are computing various mappings between the sensors maximum spanning tree
 
 \section{Graph Matching} 
 
-In the previous section we obtain a maximum spanning tree from the correlation matrix and saw how this represents a spanning tree for the grid. In this section we describe method to obtain all the possible spanning tree that has the same structure as the MST obtained from the correlation matrix of the sensors.
+In the previous section we obtain a maximum spanning tree from the correlation matrix and saw how this represents a spanning tree for the grid. We also saw that there can multiple spanning tree whose structure is similar to the MST obtained for the correlation matrix. In this section we describe method to obtain all the possible spanning trees that has the same structure as the MST obtained from the correlation matrix of the sensors.
 The task of checking if a pattern graph H is contained in a base graph G and obtaining all the mappings from G to H is a standard problem of graph matching.\\
 
-A graph matching process between two graphs $G$ = $(V_G,E_G)$ and H = $(V_H,E_H)$ consists of determining a mapping M which associates nodes of the graph G to H and vice versa. Different constraints can be imposed onto M which results in different mapping types: monomorphism, isomorphism, graph-subgraph isomorphism are the most popular ones. Graph matching is widely used in pattern recognition for comparing the graph representing an object to a model  graph, or prototype. Our problem falls under the category of graph monomorphism . \\
+A graph matching process between two graphs $G$ = $(V_G,E_G)$ and H = $(V_H,E_H)$ consists of determining a mapping M which associates nodes of the graph G to H and vice versa. Different constraints can be imposed onto M which results in different mapping types: monomorphism, isomorphism, graph-subgraph isomorphism are the most popular ones. Our problem falls under the category of graph monomorphism . \\
 Two graphs 
  $G =( V_G, E_G)$ and
  H =$( V_H, E_H)$  are monomorphic  if and only if there exists an injective (node)
-mapping $\phi (V_G) \rightarrow  V_H$ : for which $\forall v,w \in V_G:(v,w) \in E_G \Rightarrow (\phi((v),\space \phi(w)) \in E_H.$\\  holds
-true. 
+mapping $\phi (V_G) \rightarrow  V_H$ : for which $\forall v,w \in V_G:(v,w) \in E_G \Rightarrow (\phi((v),\space \phi(w)) \in E_H.$\\  
 
-Monomorphism is often confused with subgraph isomorphism. Monomorphism is weaker kind of subgraph Monomorphism. \\
+Monomorphism is often confused with subgraph isomorphism. Monomorphism is a weaker kind of subgraph isomorphism. \\
 Two graphs  $G =( V_G, E_G)$ and
  H =$( V_H, E_H)$  are sub graph isomorphic  if and only if there exists an injective (node)
-mapping $\phi( V_G) \rightarrow  V_H$ : for which $\forall v,w \in V_G:(v,w) \in E_G \Leftrightarrow (\phi((v),\space \phi(w)) \in E_H.$\\  holds
-true. 
+mapping $\phi( V_G) \rightarrow  V_H$ : for which $\forall \text{ v,w} \in V_G:(v,w) \in E_G \Leftrightarrow (\phi((v),\space \phi(w)) \in E_H.$ 
 The relationship between edges of the graphs are equivalence for subgraph isomorphism, and for Monomorphism  relationship  is an implication.\\
 A problem of finding all the Monomorphisms of the pattern graph into the base graph is defined as Monomorphism problem. Graph Monomorphism is a NP-Complete problem \cite{Garey:1979:CIG:578533}. 
 \subsection{Related Work}
@@ -422,7 +420,7 @@ In this section we give a brief description about VF2 algorithm.\\
 
 
 % VF2 explanation 
-VF2 algorithm is a graph matching algorithm to solve graph isomorphism, monomorphism and  subgraph isomorphism problem. VF2 is a depth search first method to iterate through all the nodes and recursive backtracking technique to check for all the possible mappings. A process of matching 
+VF2 algorithm is a graph matching algorithm to solve graph isomorphism, monomorphism and  subgraph isomorphism problem. VF2 uses depth search first method to iterate through all the nodes and recursive backtracking technique to check for all the possible mappings. A process of matching 
 a base graph G to a pattern graph H consists of determining a mapping M which associate nodes of base graph (G) with nodes of the pattern graph (H) and vice versa, with some constraints.
 Mapping is expressed as a set of pairs of node (n,m) with n $\in$ G and m $\in$ H. 
 In VF2 algorithm the process of finding the mapping function is described by a  State Space Representation (SSR). Each state s of the matching process can be associated to a partial mapping solution M(s),
@@ -471,14 +469,14 @@ In VF2 algorithm all the vectors that are used to store data have the following 
 \end{figure}
 
 \subsection{Computation Complexity}
-Computational complexity of the VF2 can be classified as depends on two factors: 
+Computational complexity of the VF2 depends on two factors: 
 \begin{itemize}
 \item The time required to calculate the feasibility of every SSR's , computation of the node pair mappings.
 \item Number of SSR visited.
 \end{itemize}
 
-According to the authors the former has a time complexity is $O(N)$ . For the latter the authors consider a best case; where only only one of the potential mappings are feasible is $O(N)$ and thus making the total complexity $O(N^2)$. In the worst case, the algorithm has to explore all the states. This can happen when every node is connected to every other node (base graph is a complete graph) and the graph exhibits strong symmetry. The authors show that the complexity in such a condition is $O(N!)$ and thus making the total complexity $O(N!N)$.
-In our case we show the order of complexity for a 8-neighborhood grid. The worst case for such a grid will arise when at every stage of the search tree the algorithm has to explore every possible branch. Since it's a 8-neighborhood grid all the nodes except the ones at the edges will have 8 neighbors. As one of the neighboring node would be the parent node the node at stage $i$ will have $7^î $nodes to explore and stage N there will be $7^n$ possibilities to explore . The total number of states to explore will be given by the sum:\\
+According to the authors the former has a time complexity of $O(N)$ . For the latter the authors consider a best case; where only only one of the potential mappings are feasible which makes the computation complexity $O(N)$ and thus making the overall complexity $O(N^2)$. In the worst case, the algorithm has to explore all the states. This can happen when every node is connected to every other node (base graph is a complete graph) and the graph exhibits strong symmetry. The authors show that the complexity in such a condition is $O(N!)$ and thus making the total complexity $O(N!N)$.
+In our case we show the order of complexity for a 8-neighborhood grid. The worst case for such a grid will arise when at every stage of the search tree the algorithm has to explore every possible branch. Since it's a 8-neighborhood grid all the nodes except the ones at the edges of the grid will have 8 neighbors. As one of the neighboring node would be the parent node the node at stage $i$ will have $7^{i}$ possibilities to explore and stage N there will be $7^n$ possibilities to explore . The total number of states to explore will be given by the sum:\\
 
 \begin{align*}
 1 + 7 + 7^2+ . . . . .+7^i+....7^n\\
@@ -504,7 +502,8 @@ Thus computational complexity is $O(7^NN)$
 After we obtain the various mappings. We need to decide which out of the various mappings gives the actual placement of the sensors on the grid. To identify the correct mapping we compute GCS as explained in section \ref{sec:gcs}. We calculate the grid correlation sum for all the mappings obtained and the mappings which gives the maximum sum will be the actual placement of the sensors on the grid. 
 \subsection{Limitations}
 
-Our method  can identify the location of the sensors upto rotational symmetry. As the $GCS$ remains the same for a sensor arrangement which is rotationally symmetrically to the original sensor arrangements. Consider the two arrangements that are shown in the figure \ref{fig:symm} and \ref{fig:rotationalSymm}. Therefore when we pick the mappings which has the highest GCS we get multiple mappings. The multiple mappings correspond to the arrangement which are all rotationally symmetric to each other.
+Our method  can identify the location of the sensors upto rotational symmetry. As the $GCS$ remains the same for a sensor arrangement which is rotationally symmetrically to the original sensor arrangements. 
+As seen in the two arrangements that are shown in the figure \ref{fig:symm} and \ref{fig:rotationalSymm}. Therefore when we pick the mappings which has the highest GCS we get multiple mappings. These mappings include the actual arrangement and arrangement which are rotationally symmetric it.
 
 \begin{figure}[!ht]
 \begin{floatrow}
@@ -555,7 +554,7 @@ Our method  can identify the location of the sensors upto rotational symmetry. A
 
 
 \subsection{Special case when the grid is $n \times 2$ or $2 \times n$}
-Consider a sensor $2 \times n$ sensor grid with diagonally opposite nodes connected as shown in the figure \ref{fig:ntime2}. These grid structure posses a special case of symmetry. As shown in the  figure \ref{fig:ntime2Sym} the nodes 1 and 2 are interchanged; it is as if the whole structure was rotated with  edge (1,2) fixed. The diagonally opposite edges (1,3) in figure \ref{fig:ntime2} becomes non diagonal edges in the figure \ref{fig:ntime2Sym}. To overcome this error we use weighted grid adjacency matrix instead of a binary grid adjacency matrix. We compute $Weighted Grid Adjacecny Matrix (WGMA)$ as follows:
+Consider a sensor $2 \times n$ sensor grid with diagonally opposite nodes connected as shown in the figure \ref{fig:ntime2}. These grid structure posses a special case of symmetry. As shown in the  figure \ref{fig:ntime2Sym} the nodes 1 and 2 are interchanged; it is as if the whole structure was rotated with  edge (1,2) fixed. The diagonally opposite edges (1,3) in figure \ref{fig:ntime2} becomes non diagonal edges in the figure \ref{fig:ntime2Sym}. To overcome this error we use weighted grid adjacency matrix instead of a binary grid adjacency matrix. We compute \textit{Weighted Grid Adjacecny Matrix (WGMA)} as follows:
 First we normalize the distance between all the sensor nodes which has an edge between them in the $GAM$ by dividing all the distances between the sensor nodes by the minimum distance$(d_{min})$ that exists between the nodes in the entire grid. Then we take the reciprocal of the normalized distance to obtain the WGAM. All the members of the WGAM value lies between the 0 and 1. 1 signifying the 2 sensors are close to each other and 0 signifying that the 2 sensors are far away from each other.\\
 \[
 WGAM_{i,j} = 
@@ -566,8 +565,8 @@ WGAM_{i,j} =
 \]
 
 
-We use $WGAM$ instead of $GAM$ to compute $GCS$ in equation \ref{eq:gridCorrelationSum}. The reasoning behind the use of WGAM matrix instead of the GAM is that the correlation values for the sensor which are closer is higher than the one compared to sensors which are further apart within the sensors overlapping field of view. By assigning weights to the edges in this manner, more importance is given to the edges between the sensors that are closer to the each other. Doing so the sensors which are close by contribute  more to the $GCS$ . 
-Now if we consider arrangement as shown in the figure \ref{fg:ntimes2} and \ref{fig:ntime2Sym} though there $GCS$ remain the same with $GAM$, $GCS$ won't remain the same when $WGAM$ is used. The contribution of the correlation between the sensors placed on the non diagonal edges are more compared to the contribution made by the diagonal edges. Therefore if we place the non diagonally located sensors on the diagonals of the grid $GCS$ decreases. Thus by using a weighted grid adjacency matrix we are able to obtain the mapping of the sensors onto the grid upto rotational symmetry.
+We use $WGAM$ instead of $GAM$ to compute $GCS$ in equation \ref{eq:gridCorrelationSum}. The reasoning behind the use of WGAM matrix instead of the GAM is that we hypothesize that the correlation values for the sensor which are closer is higher than the one compared to sensors which are further apart. By assigning weights to the edges in this manner, more importance is given to the edges between the sensors that are closer to the each other. Doing so the sensors which are close by contribute  more to the $GCS$ . 
+Now if we consider arrangement as shown in the figure \ref{fig:ntime2} and \ref{fig:ntime2Sym} though there $GCS$ remain the same with $GAM$, $GCS$ won't remain the same when $WGAM$ is used. The contribution of the correlation between the sensors placed on the non diagonal edges are more compared to the contribution made by the diagonal edges. Therefore if we place the non diagonally located sensors on the diagonals of the grid $GCS$ decreases. Thus by using a weighted grid adjacency matrix we are able to obtain the mapping of the sensors onto the grid upto rotational symmetry.
 
 \begin{figure}
 \begin{floatrow}
@@ -612,10 +611,7 @@ Now if we consider arrangement as shown in the figure \ref{fg:ntimes2} and \ref{
 
 
 \section{Summary}
-In this chapter we describe a method to locate the sensor on the grid making use of sensor data and grid vertices information upto rotational symmetry. In figure \ref{fig:Summary} we summaries the steps involved in the form of a flowchart. 
-
-
-
+In this chapter we describe a method to locate the sensor on the grid making use of sensor data and grid vertices information up-to rotational symmetry. Figure \ref{fig:Summary} gives the summary of steps involved in the form of a flowchart. 
 
 \begin{figure}
 \includegraphics[scale=0.6]{./pics/methodSummary.png}
