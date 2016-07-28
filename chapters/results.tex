@@ -1,4 +1,4 @@
-\chapter{Results and Discussion}
+\chapter{Results}
 In order to verify the proposed method we test it with data obtained from two different testbeds. First we apply our method to the data collected from the test bed which is described in chapter \ref{chp:testbed} . Next we make use of the data released by the WSU smart home project\footnote{http://ailab.wsu.edu/casas/datasets/} \cite{cook2009assessing}. We use C++ implementation of the VF2 algorithm released by the authors available at \cite{vfLib} for finding the mappings between the grid graph and the MST of correlation Matrix $(R)$.
 \section{Error Metrics }
 To evaluate the results we define an error metrics as follows:\\
@@ -7,7 +7,7 @@ error=\frac{\text{Number of misplaced sensors}}{\text{Number of sensors}}
 \end{equation}
 \section{Data Length}
 \label{sec:dataLength}
-An important aspect to know in a data driven method is, how much of data is required in order to get accurate results. For this purpose we divide the entire dataset of period $T$ into blocks of time interval $t$ as shown in the figure \ref{fig:time}. We increment $t$ until a value beyond which error observed for all the blocks of data of length $t$ is zero. 
+An important aspect to know in a data driven method is, how much of data is required in order to get accurate results? To answer this question, the entire dataset of length $T$ is divided into blocks of time interval $t$ as shown in the figure \ref{fig:time}. We iteratively increment $t$ until a value beyond which error observed for all the blocks of data of length $t$ is zero. 
 This is done because there can be parts of the data which might give pseudo high correlation value between two non neighboring nodes or vice versa due to various reasons. As the data length increases, the effect of the data influencing the incorrect correlation values between the sensors diminishes.
 
 \begin{figure}[!ht]
@@ -18,7 +18,7 @@ This is done because there can be parts of the data which might give pseudo high
 
 \section{HTC34 testbed}
 As described earlier, the testbed consists of 8 sensors arranged as a $2 \times 4$ grid.
-The field of view of the sensors used in the testbed is 2.6m.
+The field of view of the sensors used in the testbed has a radius of 2.6m.
 Using the coordinates of the vertex of the grid and the field of view of the sensors we can determine the neighboring vertices for every vertex of the grid.
 All the vertices of the gird with field of view marked around them are as shown in the figure \ref{fig:fov}. 
 The co-ordinates of the vertices, calculation of the field of view for the sensor and the computation of $GAM$ is explained in detail in appendix \ref{app:A}. 
@@ -122,11 +122,15 @@ As can be seen from figure \ref{fig:corrMatrix} the correlation values between t
 \caption{Correlation Matrix $R$ and it's corresponding graph G and the maximum spanning tree derived from it}
 \label{fig:materFig}
 \end{figure}
+
+
+ 
+
 Using the method described in section \ref{sec:dataLength}, we determine that the minimum data length required to compute the sensors location accurately to be 6hrs.
-Hence 10 different datasets of 6hrs each are used to evaluate the performance of our method.
-We obtain various mappings $(M)$ between the grid and $MST$ for $R$.
+Hence we divide our data into blocks of 6hrs length, from which we choose 10 blocks randomly and apply our method to evaluate its performance.
+10 different datasets of 6hrs each are used to evaluate the performance of our method.
 For all the mappings in $M$ we compute the $GCS$ using $WGAM$. The mappings which gave the maximum $GCS$ are as shown in the figure \ref{fig:arrangement4x2}.
-The mappings corresponds to the actual arrangements of the sensors on the grid and its rotationally symmetrical arrangements.
+These mappings corresponds to the actual arrangements of the sensors on the grid and its rotationally symmetrical arrangements.
 We also evaluate the datasets using brute force search method and we obtain the same set of mappings as the solution that is obtained from our method. The results for both brute force and our method is presented in table \ref{tab:resHTC}.
 As can be seen from table we obtain 0\% error for all the datasets. 
 Further table \ref{tab:resHTC} also provides details about the number of states visited (including all the intermediate states), number of mappings between the $MST$ and grid, the number of mappings obtained as the solution from the developed method. 
@@ -162,16 +166,6 @@ dataset & \begin{tabular}[c]{@{}c@{}}Number of\\ states visited\end{tabular} & M
 \begin{figure}[!ht]
 \begin{tikzpicture}
 \begin{scope}
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {1};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {2};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {3};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {4};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {5};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {6};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {7};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {8};
-\end{scope}
-\begin{scope}[shift={(4,0)}]
 \node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {7};
 \node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {8};
 \node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {5};
@@ -181,17 +175,9 @@ dataset & \begin{tabular}[c]{@{}c@{}}Number of\\ states visited\end{tabular} & M
 \node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {1};
 \node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {2};
 \end{scope}
-\begin{scope}[shift={(8,0)}]
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {2};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {1};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {4};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {3};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {6};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {5};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {8};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {7};
-\end{scope}
-\begin{scope}[shift={(12,0)}]
+
+
+\begin{scope}[shift={(4,0)}]
 \node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {8};
 \node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {7};
 \node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {6};
@@ -200,6 +186,30 @@ dataset & \begin{tabular}[c]{@{}c@{}}Number of\\ states visited\end{tabular} & M
 \node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {3};
 \node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {2};
 \node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {1};
+\end{scope}
+
+
+\begin{scope}[shift={(8,0)}]
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {1};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {2};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {3};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {4};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {5};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {6};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {7};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {8};
+\end{scope}
+
+
+\begin{scope}[shift={(12,0)}]
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {2};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {1};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {4};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {3};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {6};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {5};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {8};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {7};
 \end{scope}
 \end{tikzpicture}
 \caption{Arrangements obtained as solution for the HTC34 testbed}
@@ -210,17 +220,17 @@ dataset & \begin{tabular}[c]{@{}c@{}}Number of\\ states visited\end{tabular} & M
 %-------------------------------------------------------------WSU TOKYO TESTBED-----------------------------------------------------------------------------------------------------------------------------------%
 
 \section{WSU Tokyo testbed}
-Next, we verify our method using the data obtained from WSU smart workplace testbed\cite{cook2010detection}, a publicly available data set. The testbed is located in a lab,  where students performed their normal work routine. Data was collected over a period of 4 months. 
-The testbed consists of 43\footnote{Sensor 38 has been ignored as no triggers were found for it throughout the dataset} motion sensors, placed as shown in the figure \ref{fig:casas}. The sensors field of view is $1.2m \times 1.2m$. In appendix \ref{app:B} we provide a detailed explanation about how we obtain the co-ordinates and the grid adjacency matrix for the testbed. The data from the WSU testbed is represented in the form of a four tuple as shown in table \ref{tab:WSUDATA}.
+To further validate the effectiveness of our method, we use the data from WSU smart workplace testbed\cite{cook2010detection}, a publicly available data set. The testbed called Tokyo is located in a lab,  where students perform their normal work routine. Data was collected over a period of 4 months. 
+The testbed consists of 43\footnote{Sensor 38 has been ignored as no triggers were found for it throughout the dataset} motion sensors, placed as shown in the figure \ref{fig:casas}. The sensors field of view is $1.2m \times 1.2m$. In appendix \ref{app:B} we provide a detailed explanation about how we obtain the co-ordinates and the grid adjacency matrix for the testbed. The data from the WSU testbed is represented in the form of a four tuple as shown in table \ref{tab:WSUDATA}. 
 \subsection{Pre processing}
-Plot of the dataset for a period of 12hrs is as shown in the figure \ref{fig:heatMap}. As can be inferred from the figure the dataset mainly consists of parts which are largely inactive. There should be certain amount of activity happening in the space to observe correlation values between the sensors.  Also if  no activity is observed in the space it will result in all the sensors having the same values(0) and unfairly influencing the correlation values between the sensors, as correlation value is a measure of similarity between two datasets. For these reasons we discard the parts of the dataset where we do not observe any trigger for a sensor for a time period of more than 3hrs. The resulting data is sampled at 100ms and is used to verify our method to find the location of the sensors.
+Plot of the dataset for a period of 12hrs is as shown in the figure \ref{fig:heatMap}. As can be inferred from the figure the dataset mainly consists of parts which are largely inactive. There should be certain amount of activity happening in the space to observe correlation values between the sensors.  Also if  no activity is observed in the space it will result in all the sensors having the same values(0) and unfairly influencing the correlation values between the sensors, as correlation value is a measure of similarity between two datasets. For these reasons we filter out the parts of the data where we do not observe any trigger for a sensor for a time period of more than 3hrs. The resulting data is sampled at 100ms and is used to verify our method to find the location of the sensors.
 
 
 
 \begin{figure}[!ht]
 \includegraphics[scale=0.5]{./pics/LabSensorsLayout.jpg}
 \centering
-\caption{Floor plan for WSU CASAS office testbed, named Tokyo}
+\caption{Floor plan for WSU CASAS office testbed, named Tokyo with adjacency marked.}
 \label{fig:casas}
 \end{figure}
 
@@ -255,7 +265,7 @@ Date       & Time            & sensor & state \\ \hline
 
 
 \subsection{Sub layout}
-Before we use the complete layout of the grid, we carry out our analysis on a $4 \times 3$ sub-layout which includes sensors 27, 22, 15, 28, 23, 16, 29, 24, 17, 30, 25, 18. This grid was chosen as it is mentioned in \cite{cook2010detection} that the region covered by these sensors is more active. After preprocessing the dataset reduces to a span of 207hrs. 
+Before we use the complete layout of the grid, we carry out our analysis on a $4 \times 3$ sub-layout which includes sensors 27, 22, 15, 28, 23, 16, 29, 24, 17, 30, 25, 18. This grid was chosen as it is mentioned in \cite{cook2010detection} that the region covered by these sensors is more active compared to other regions in the testbed. After processing, the data reduces to a span of 207hrs. 
 
 
 \subsection{Data Length}
@@ -269,7 +279,7 @@ As it can be seen from the figure, for $t>85$ the error observed for the blocks 
 \end{figure}
 
 \subsection{Results}
-Data is split in to two datasets of 85hrs each. The obtained MST for both the datasets are as shown in figure \ref{fig:MST4x3}. The result obtained from the method is presented in the table \ref{tab:wsu43res}. Both brute force and our method gives the same locations of the sensors as the result, but the number of arrangements that had to be checked in case of brute-force is 479001600 whereas with our method the number of mappings that had to be checked were 2120 and 1811 for dataset 1 and 2 respectively. A brute force search for the 12 sensor arrangement required approximately 27hrs to compute the results. Whereas our method needed on an average 10 seconds to compute the results. As can be seen from the table \ref{tab:resHTC} and \ref{tab:wsu43res} the number of mappings obtained is larger in case of sensor topology of HTC34 testbed compared to a $4 \times 3$ sub-layout topology of Tokyo testbed, even though the number of sensors is more in case of the latter. This is because HTC34 arrangement exhibits rotational symmetry. Due to which for every valid mapping between the MST and grid the mappings which are rotationally symmetric will also be valid. Thus increasing the number of mappings.
+Data is split in to two datasets of 85hrs each. The grid graph is as shown in the figure \ref{fig:casas}. The obtained MST for both the datasets are as shown in figure \ref{fig:MST4x3}. The result obtained from the method is presented in the table \ref{tab:wsu43res}. Both brute force and our method gives the same locations of the sensors as the result, but the number of arrangements that had to be checked in case of brute-force is 479001600 whereas with our method the number of mappings that had to be checked were 2120 and 1811 for dataset 1 and 2 respectively. A brute force search for the 12 sensor arrangement required approximately 27hrs to compute the results. Whereas our method needed on an average 10 seconds to compute the results. As can be seen from the table \ref{tab:resHTC} and \ref{tab:wsu43res} the number of mappings obtained is larger in case of sensor topology of HTC34 testbed compared to a $4 \times 3$ sub-layout topology of Tokyo testbed, even though the number of sensors is more in case of the latter. This is because HTC34 arrangement exhibits rotational symmetry. Due to which for every valid mapping between the MST and grid, the mappings which are rotationally symmetric will also be valid. Thus increasing the number of mappings.
 \begin{figure}[!ht]
 \centering
 \begin{subfigure}[b]{0.4\textwidth}
@@ -301,17 +311,19 @@ Dataset                & \begin{tabular}[c]{@{}c@{}}Number of \\ states visited\
 
 \subsection{Complete Layout of Tokyo testbed}
 
-After validating the $4 \times 3$ sub layout we apply our method to the complete layout of Tokyo testbed.
+After validating the $4 \times 3$ sub layout, we apply our method to the complete layout of Tokyo testbed.
 
 \subsection{Data length}
-After applying the preprocessing step considering all the sensors, we are left with only 27hrs of data. The main reason for the drastic fall in the data length is that sensor  1 and 4 are highly inactive and very less triggers are observed as a result majority of the data had to be discarded. As we are left with only 27hrs of data we carry out our analysis with the complete
+After applying the processing step considering all the sensors, we are left with only 27hrs of data. The main reason for the drastic fall in the data length is that sensor  1 and 4 are highly inactive and very less triggers are observed as a result majority of the data had to be filtered out. We perform our analysis with the processed data.
 
 
 \subsection{Results}
 
- We use the obtained data to compute the location of the sensors. The MST for the complete layout is as shown in figure \ref{fig:MST43}. We obtain two different mappings. 
- Nodes 20 and 19 show rotational symmetry with respect to node 21, so in one arrangement nodes 19 and 20 are mapped to their respective locations in the other mapping nodes 20 and 19 locations are interchanged. 
- The results are as shown in the table \ref{tab:wsu43Resl}.
+We use the obtained data to compute the location of the sensors. The MST for the complete layout is as shown in figure \ref{fig:MST43}. We obtain two different mappings. 
+Nodes 20 and 19 show rotational symmetry with respect to node 21 so in one arrangement nodes 19 and 20 are mapped to their respective locations in the other mapping nodes 20 and 19 locations are interchanged. As the sensors are equi-distant from node 21, the locations cannot be uniquely identified using a $WGAM$. 
+The results are as shown in the table \ref{tab:wsu43Resl}. We observe an error of 6.9\% as location of three sensors are incorrectly mapped.
+Brute force search for 43 sensors was not computed as the search space is of the order of $10^{52}$, even if the computer is able to compute $10^{12}$ combinations per second it will take 7e+33 years to finish evaluation.
+While our proposed method was able to compute the sensor location within 414s $\approx$ 6mins. 
   
   
 
@@ -329,53 +341,64 @@ After applying the preprocessing step considering all the sensors, we are left w
 \begin{tabular}{|c|c|c|c|}
 \hline
 Dataset & \begin{tabular}[c]{@{}c@{}}Number of \\ states visited\end{tabular} & \begin{tabular}[c]{@{}c@{}}Solution\\ Mappings\end{tabular} & Error(\%) \\ \hline
-1       & 101376                                                              & 2                                                           & 6.9       \\ \hline
+1       & 70656                                                              & 2                                                           & 6.9       \\ \hline
 \end{tabular}
 \end{table}
-\subsection{Understanding the errors}
-We observe error in the mappings of sensors 34,36 and 37. Senors 34,36 and 37 are mapped to the grid locations 36,37 and 34 respectively.The correlation values between the sensors are as shown in the figure \ref{fig:true_arr} and the positions of the sensors obtained from our method is as shown in the figure \ref{fig:false_arr}. Since we are computing $GCS$ using WGAM higher correlation values are placed on the edges which are closer to each other. $GCS$ is maximized when sensors which are highly correlated are placed on the edges with higher weights maintaining the adjacency. Among sensors 34,36 and 37 the maximum correlation is between the sensors 34 and 36. The edge with the maximum weight (vertices which are close) is between the vertices 36 and 37. Out of sensors 34 and 37 sensor 34 has the maximum correlation with sensor 33 hence sensor 34 get mapped to vertex 36 and sensor 36 is mapped to vertex 37.
 
 \begin{figure}[!ht]
 \centering
 \begin{subfigure}[b]{0.4\textwidth}
 \centering
-\includegraphics[scale=0.3]{./pics/true_arr.png}
-\caption{Correlation value between the sensors with actual arrangement}
+\includegraphics[scale=0.5]{./pics/grid_arr.png}
+\caption{Location of vertices 34,36 and 37 with neighboring vertices marked.}
 \label{fig:true_arr}
-\hfill
+\qquad
 \end{subfigure}
 \begin{subfigure}[b]{0.4\textwidth}
 \centering
-\includegraphics[scale=0.3]{./pics/computer_arr.png}
+\includegraphics[scale=0.5]{./pics/true_arr.png}
+\caption{Correlation value between the sensors with actual arrangement}
+\label{fig:true_arr}
+\qquad
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+\centering
+\includegraphics[scale=0.5]{./pics/computer_arr.png}
 \caption{Arrangement computed by our method}
 \label{fig:false_arr}
-\hfill
+\qquad
+\end{subfigure}
+\begin{subfigure}[b]{0.4\textwidth}
+\centering
+\includegraphics[scale=0.5]{./pics/long_data_arr.png}
+\caption{Correlation values with dataset of long duration}
+\label{fig:arr}
+\qquad
 \end{subfigure}
 \caption{Arrangement of sensors and there correlation coefficient}
 \label{fig:arrangement}
 \end{figure}
+\subsection{Understanding the errors}
+We observe error in the mappings of sensors S34, S36 and S37. Senors S34, S36 and S37 are mapped to the grid locations G36, G37 and G34 respectively. The correlation values between the sensors are as shown in the figure \ref{fig:true_arr} and the positions of the sensors obtained from our method is as shown in the figure \ref{fig:false_arr}. Since we are computing $GCS$ using $WGAM$ higher correlation values are placed on the edges which are closer to each other. Among sensors S34, S36 and S37, the maximum correlation is observed between the sensors S34 and S36. The edge with the maximum weight (vertices which are close) is between vertices G36 and G37. Therefore sensors S34 and S36 are to be placed on vertices G36 and G37 and the remaining sensor S37 will be placed on G34. The next step would be to identify which sensor should be placed on which vertex out of the two. This is decided by looking at the correlation values with sensor S37 placed on vertex G34, weight of edge (G36, G34) is greater than the weight of edge (G34,G37). Therefore sensors with higher correlation with S37 will be placed on vertex G36, which in this case would be S34. Thus we get the arrangement computed in figure \ref{fig:false_arr}.
 
-One of the reason for such distribution of correlation can be due to the short duration of the sensor data available. Therefore to verify, we consider only these 4 sensors and apply the preprocessing step for the parent dataset. We get resultant data of around 97hrs. Using this preprocessed data set we compute the correlation values, we obtain the values as shown in the figure \ref{fig:arr}. For which when the $GCS$ is calculated with $WGAM$, the maximum value of GCS corresponds to the actual arrangement as shown in figure \ref{fig:arr}. Confirming that the error was caused due to the shortage of data.
 
-\begin{figure}
-\includegraphics[scale=0.4]{./pics/long_data_arr.png}
-\caption{Correlation values with dataset of long duration}
-\label{fig:arr}
-\end{figure}
+One of the reason for such distribution of correlation can be due to the short duration of the sensor data available. Therefore to verify, we consider only these 3 sensors and apply the preprocessing step for the parent dataset. We get resultant data of around 97hrs. Using this data we compute the correlation values. The values obtained are as shown in the figure \ref{fig:arr}. For which when the $GCS$ is calculated using $WGAM$, the maximum value of $GCS$ corresponds to the actual arrangement as shown in figure \ref{fig:arr}. Confirming that the error was caused due to the shortage of data.
+
+
 \section{Summary}
 
 In this chapter we present the results obtained for the proposed method. Table \ref{tab:resSummary} summarizes the results for HTC34 and the Tokyo testbed. As can be seen the proposed method is able to determine the locations of the sensors with no error for HTC34 and sub layout of Tokyo testbed. For the complete layout of the testbed we obtain an error with respect to the location of three sensors, on further investigation we see that the main reason for the error is due to the shortage of the data. From our analysis we can conclude that the accuracy of the results mainly depends on the data length and the level of activity happening in the space under consideration. We also see that the amount of data required for analysis becomes more if the overlapping regions between the sensors is less.
 
 \begin{table}[]
 \centering
-\caption{My caption}
+\caption{Search space comparison of brute force and our method}
 \label{tab:resSummary}
 \begin{tabular}{|c|c|c|c|}
 \hline
 Testbed                & Brute force Mappings  & Graph matching mappings & Error(\%) \\ \hline
 HTC34                  & 40320                 & 2696                    & 0         \\ \hline
 Tokyo (sublayout)      & 479001600             & 1966                     & 0         \\ \hline
-Tokyo(complete layout) & $6.04 \times 10^{52}$ & 101376                  & 6.9       \\ \hline
+Tokyo(complete layout) & $6.04 \times 10^{52}$ & 70656                  & 6.9       \\ \hline
 \end{tabular}
 \end{table}
 

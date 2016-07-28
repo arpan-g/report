@@ -77,6 +77,8 @@ vertices & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
 
 The coordinates of the vertices in Tokyo testbed are not explicitly specified. The information available are the room layout map as shown in figure \ref{fig:casas}, pir sensor field of view given as $1.2m \times 1.2m$ and the average distance between the sensors as 1.2m in \cite{crandall2011tracking}. Assuming that the given layout is to scale and the distance between sensors 27 and 22 as 1.2m, the coordinates of all the sensors are computed. We start by placing the origin(0,0) at vertex 30 and measure the distance of every vertex from the x and y axis which gives the coordinates of all vertices on the grid. The coordinates thus obtained are as shown in the table \ref{tab:wsuxy}. No triggers was found for sensor 38 in the dataset, hence sensor 38 is not considered.
 
+Adjacency between two vertices is determined if the square of dimension $1.2 \times 1.2$ drawn around the vertices have any overlap. If there is any overlap then the vertices are considered neighbors.
+
 
 \begin{table}[]
 \centering
@@ -100,22 +102,6 @@ vertices & x    & y     & vertices & x    & y     & vertices & x     & y     & v
 \end{table}
 
 
-
-
-%\begin{figure}
-%\centering
-%\includegraphics{./pics/MST4x3_1.png}
-%\caption{MST for the $4 \times 3$ layout}
-%\label{fig:MST4x3}
-%\end{figure}
-%
-%
-%\begin{figure}
-%\centering
-%\includegraphics{./pics/MST4x3_2.png}
-%\caption{MST for the $4 \times 3$ layout}
-%\label{fig:MST4x3_2}
-%\end{figure}
 
 
 
