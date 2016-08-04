@@ -1,7 +1,7 @@
 \chapter{Methodology}
 
-This chapter explains the method developed to locate the sensors in a sensor grid, using the information about the locations of the vertices of the grid and data obtained from the sensors.
-Consider a $m \times n$ grid as shown in the figure \ref{fig:Grid}. There are $N= (m\times n)!$ ways in which the sensors can be uniquely placed on the grid. 
+This chapter explains the method developed to locate the occupancy sensors in a ceiling mounted sensor grid, using the information about the locations of the vertices of the grid and data obtained from the sensors.
+Consider a sensor grid as shown in the figure \ref{fig:Grid}, consisting of n nodes. There are $N= n!$ ways in which the sensors can be uniquely placed on the grid. 
 Out of these N ways we have to identify the actual locations of the sensors in the grid.
 \begin{figure}[!ht]
 \begin{tikzpicture}
@@ -30,16 +30,16 @@ Out of these N ways we have to identify the actual locations of the sensors in t
        \draw[|<->|](0,3.5)--(1.5,3.5) node[midway,fill=white]{d};
        \draw[thick](1.5,3.5) circle(1cm);
        
-\draw [decorate,decoration={brace,amplitude=10pt},xshift=-4pt,yshift=0pt]
-(-0.5,0) -- (-0.5,3.5) node [black,midway,xshift=-0.6cm] 
-{\footnotesize $M$};
+%\draw [decorate,decoration={brace,amplitude=10pt},xshift=-4pt,yshift=0pt]
+%(-0.5,0) -- (-0.5,3.5) node [black,midway,xshift=-0.6cm] 
+%{\footnotesize $M$};
 
-\draw [decorate,decoration={brace,mirror,amplitude=10pt},xshift=-1em,yshift=-2em](0,-0.3) -- (4.5,-0.3) node [black,midway,yshift=-0.6cm]{\footnotesize N};
+%\draw [decorate,decoration={brace,mirror,amplitude=10pt},xshift=-1em,yshift=-2em](0,-0.3) -- (4.5,-0.3) node [black,midway,yshift=-0.6cm]{\footnotesize N};
 
 
 \end{tikzpicture}
 \centering
-\caption{A $M \times N$ regular grid having a sensor with field of view r and distance between the neighboring nodes being d.}
+\caption{A sensor grid with field of view sensors being r.}
 \label{fig:Grid}
 \end{figure}
 
@@ -50,7 +50,7 @@ Before we explain the method we introduce the definitions of the terms that we u
 \label{def:ns}
 \end{definition}
 \begin{definition}{Grid Adjacency Matrix:}
- We represent the sensor grid in the form of an adjacency matrix. Two vertices of the grid i and j are adjacent if the distance between them ($d_{i,j}$) is less than twice the radius (r) of the sensors field of view.
+ We represent the sensor grid in the form of an adjacency matrix. Two vertices of the grid $i$ and $j$ are adjacent if the distance between them ($d_{i,j}$) is less than twice the radius $(r)$ of the sensors field of view.
 
 \[
 GAM_{i,j} = 
@@ -65,23 +65,25 @@ d_{i,j}=\sqrt{(x_i-x_j)^2 + (y_i-y_j)^2}
 \end{equation*}
 \label{def:GAM}
 \end{definition}
-From the definitions \ref{def:GAM} and \ref{def:ns} we can say that neighboring sensors will always be placed on neighboring vertices. As can be seen in the figure \ref{fig:Grid} there will be overlap in the field of view between two sensors if the distance (d) between them is less than 2r.
+From the definitions \ref{def:ns} and \ref{def:GAM}, we can say that sensors placed on neighboring vertices will be neighboring nodes and vise versa. As can be seen in the figure \ref{fig:Grid} there will be an overlap in the field of view between two sensors if the distance (d) between them is less than 2r.
 
 \section{Feature}
-As neighboring sensors have an overlapping field of view, they observe the same events and thus are highly correlated.
-On the raw signals of the PIR data stream we use a sliding window with $50\%$ overlap between the consecutive windows and compute the energy feature using the equation \ref{eq:energyEq}. 50\% overlapping window has been chosen as it has been shown to be effective for feature extraction previously\cite{bao2004activity}.
+As it has be shown previously\cite{Hong:2013:TAS:2528282.2528302,Koc:2014:CLC:2674061.2674075} that the relative sensor spatial locations can be inferred by clustering sensors based on the correlation between the sensors, we commence our method by identifying a feature which will aid us to do the same. As neighboring sensors have an overlapping field of view, they observe the same events and thus are highly correlated. On the raw signals of the PIR data stream we use a sliding window with $50\%$ overlap between the consecutive windows and compute the energy feature using the equation \ref{eq:energyEq}. 50\% overlapping window has been chosen as it has been shown to be effective for feature extraction previously\cite{bao2004activity}.
 \begin{equation}
 \label{eq:energyEq}
-E_s = {\sum_{n=0}^{k}{|x(n)|}^2}
+E_s = {\sum_{n=0}^{k}{|f[n]|}^2}
 \end{equation}
+$f[n]$ - Discrete time signal.\\
+
 For a PIR sensors whose output is binary, computing energy reduces to counting the number of triggers observed within the window.
 
 With the newly computed energy data stream, we compute the cross correlation between all the sensors using equation \ref{eq:corrcoeff}
 \begin{equation}
 \label{eq:corrcoeff}
-r(x,y)=\frac{\sum_{i=1}^{n}(X_i-\overline{X})(Y_i-\overline{Y})}{\sqrt{\sum_{i=1}^{n}(X_i-\overline{X})^2}\sqrt{\sum_{i=1}^{n}(Y_i-\overline{Y})^2}} \\
+r_{X,Y}=\frac{\sum_{i=1}^{n}(X_i-\overline{X})(Y_i-\overline{Y})}{\sqrt{\sum_{i=1}^{n}(X_i-\overline{X})^2}\sqrt{\sum_{i=1}^{n}(Y_i-\overline{Y})^2}} \\
 \end{equation}
 $X$ and $Y$ are data streams.\\
+$X_i$ and $Y_i$ are the $i^{th}$ sample of the data stream $X$ and $Y$ respectively.\\
 $\overline{X}$ and $\overline{Y}$ is the mean value of $X$ and $Y$ respectively.\\
 $n$ is the number of samples.\\
 
@@ -93,15 +95,15 @@ Using the cross correlation values between the sensors, we define correlation ma
 \centering
 R = 
 \begin{bmatrix}
-    r(1,1) & r(1,2) & \dots  & r(1,n) \\
-    r(2,1) & r(2,2)  & \dots  & r(2,n) \\
+    r_{1,1} & r_{1,2} & \dots  & r_{1,n} \\
+    r_{2,1} & r_{2,2}  & \dots  & r_{2,n} \\
     \vdots & \vdots  & \ddots & \vdots \\
-    r(n,1) & r(n,2)  & \dots  & r(n,n)
+    r_{n,1} & r_{n,2}  & \dots  & r_{n,n}
 \end{bmatrix}
 \end{equation}\\
-$r(\alpha,\beta)$ represents correlation value between the sensor $\alpha$ and $\beta$.\\
+$r_{\alpha,\beta}$ represents correlation value between the energy stream for sensor $\alpha$ and $\beta$.\\
 
-Using \textit{correlation matrix} ($R$) and \textit{grid adjacency matrix} $(GAM)$ we define a quantity called \textit{Grid Correlation Sum (GCS)} as given in the equation \ref{eq:gridCorrelationSum}. $GCS$ represents the sum of correlation value of the sensor pair residing on neighboring vertices of the grid.
+Using \textit{correlation matrix} ($R$) and \textit{Grid Adjacency Matrix} $(GAM)$ we define a quantity called \textit{Grid Correlation Sum (GCS)} as given in the equation \ref{eq:gridCorrelationSum}. $GCS$ represents the sum of correlation value of the sensor pair residing on neighboring vertices of the grid.
 As the matrices are symmetrical along the diagonals we only consider the elements of the upper triangle of the matrices excluding the diagonal elements. 
 
 \begin{equation}
@@ -114,7 +116,7 @@ $\phi$ is a mapping functions which gives the sensor present at vertex i.\\
 $R(\alpha,\beta)$: correlation coefficient between the sensor $\alpha$ and $\beta$.\\
 $GAM$:  Adjacency matrix of the grid as per definition \ref{def:GAM}.\\
 
-We use $GCS$ to identify the correct arrangement out of all the $N$ possible arrangement. If we compute  $GCS$ for all the possible arrangements, the arrangement with the maximum $GCS$ will represent the actual arrangement of the sensors on the grid.  
+We use $GCS$ to identify the correct arrangement out of all the $N$ possible arrangements. If we compute  $GCS$ for all the possible arrangements, the arrangement with the maximum $GCS$ will represent the actual arrangement of the sensors on the grid.  
 If two non-neighboring sensors are kept on neighboring vertices or vice versa then the correlation value between those two sensors will be low and thus decreasing the $GCS$.
 To illustrate this consider a sensor grid as shown in the figure \ref{fig:arrangement1}.
  It consists of 3 $\times$ 3 grid.  
@@ -135,7 +137,7 @@ GCS_{2}=\text{ r(1,2)+r(1,4)+...+\textbf{r(2,6)}+...+\textbf{r(3,5)+r(3,9)}...+r
 \foreach \y in {0,1,2}
  \foreach \x in {0,1,2}
 {\pgfmathtruncatemacro{\label}{\x-3*\y+7}
-\node[darkstyle](\x\y) at (1.5*\x,1.5*\y){\label};
+\node[darkstyle](\x\y) at (1.5*\x,1.5*\y){G\label};
 }
  \foreach \x in {0,1,2}
     \foreach \y [count=\yi] in {0,1}  
@@ -151,17 +153,17 @@ GCS_{2}=\text{ r(1,2)+r(1,4)+...+\textbf{r(2,6)}+...+\textbf{r(3,5)+r(3,9)}...+r
 \begin{tikzpicture}[darkstyle/.style={circle,draw,fill=gray!40,minimum size=5}]
 
 \draw[step = 1.5,thick ] (7.4,0) grid (10.5,3);
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (7) at (7.5,0) {7};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (4) at (7.5,1.5) {4};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (1) at (7.5,3) {1};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (7) at (7.5,0) {G7};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (4) at (7.5,1.5) {G4};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (1) at (7.5,3) {G1};
 
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (8) at (9,0) {8};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (5) at (9,1.5) {5};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (2) at (9,3) {2};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (8) at (9,0) {G8};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (5) at (9,1.5) {G5};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (2) at (9,3) {G2};
 
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (9) at (10.5,0) {9};
-\node[circle,draw=black,fill=red!80!black,minimum size=5] (3) at (10.5,1.5) {3};
-\node[circle,draw=black,fill=red!80!black,minimum size=5] (6) at (10.5,3) {6};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (9) at (10.5,0) {G9};
+\node[circle,draw=black,fill=red!80!black,minimum size=5] (3) at (10.5,1.5) {G3};
+\node[circle,draw=black,fill=red!80!black,minimum size=5] (6) at (10.5,3) {G6};
 %\draw [<->,red] (3.east) to [out=60,in=60] (6.east);
 
 \end{tikzpicture}
@@ -174,7 +176,7 @@ GCS_{2}=\text{ r(1,2)+r(1,4)+...+\textbf{r(2,6)}+...+\textbf{r(3,5)+r(3,9)}...+r
 \end{floatrow}
 \end{figure}
 
-$GCS_{1}$ will be greater than $GCS_{2}$ as r(2,3) $>$ r(2,6) ,r(5,6)$>$r(3,5) and r(6,9) $>$ r(3,9) as sensors 2 and 6 , 3 and 5, 3 and 9 are non-neighboring sensor nodes placed on neighboring vertices. Hence we can say that $GCS$ will be maximum for a  mapping which maps sensors onto the grid accurately.\\
+$GCS_{1}$ will be greater than $GCS_{2}$ as $r(2,3)>r(2,6)$ , $r(5,6) > r(3,5)$ and $ r(6,9) > r(3,9)$ as sensors 2 and 6 , 3 and 5, 3 and 9 are non-neighboring sensor nodes placed on neighboring vertices. Hence we can say that $GCS$ will be maximum for a  mapping which maps sensors onto the grid accurately.\\
 With this condition, a straight forward way to determine the sensor location will be to carry out a brute force search where $GCS$ is computed for all the $N$ possible mappings. The brute force search can be carried out only when the number of sensors is low, as the number of sensors increases the number of possible mappings also increase drastically, which makes it impossible to carry out a brute force search. Hence there is a need to reduce the search space.
 
 
@@ -187,7 +189,7 @@ To compute MST we make use of Prim's algorithm\cite{BLTJ:BLTJ1515}.  Prim's algo
 As the sensors are placed on the grid and there exists an edge between the neighboring vertices of the grid. The MST over ${R}$ represents one of the spanning trees for the grid. As illustrated in the figure \ref{fig:MST}.
 
 \begin{figure}[!ht]
-\begin{tikzpicture}[darkstyle/.style={circle,draw,fill=gray!40,minimum size=5}]
+\begin{tikzpicture}[scale=0.6,darkstyle/.style={circle,draw,fill=gray!40,minimum size=5,transform shape}]
 \node[darkstyle]{S1}
     child{node[darkstyle]{S2}}
     child{node[darkstyle]{S4}
@@ -199,7 +201,7 @@ As the sensors are placed on the grid and there exists an edge between the neigh
                 child{node[darkstyle]{S8}}}};
 \end{tikzpicture}
 \qquad \qquad \qquad
-\begin{tikzpicture}[darkstyle/.style={circle,draw,fill=gray!40,minimum size=5}]
+\begin{tikzpicture}[darkstyle/.style={circle,draw,fill=gray!40,minimum size=3}]
 \foreach \y in {0,1,2}
  \foreach \x in {0,1,2}
 {\pgfmathtruncatemacro{\label}{\x-3*\y+7}
@@ -351,7 +353,7 @@ The main reason for the decrease in the possible mapping is because when we are 
 
 \section{Graph Matching} 
 
-In the previous section, we obtain a maximum spanning tree from $R$ and saw how this represents a spanning tree for the grid. We also observe that there can be multiple spanning trees whose structure is similar to the MST. In this section we describe a method to obtain all the possible spanning trees that have the same structure as the MST obtained from the correlation matrix of the sensors.
+In the previous section, we obtain a maximum spanning tree from $R$ and saw how this represents a spanning tree for the grid. In addition, we observe that there can be multiple spanning trees whose structure is similar to the MST. In this section, we describe a method to obtain all the possible spanning trees that have the same structure as the MST obtained from the correlation matrix of the sensors.
 The task of checking if a pattern graph $H$ is contained in a base graph $G$ and obtaining all the mappings from $G$ to $H$ is a standard problem of graph matching.
 
 A graph matching process between two graphs $G$ = $(V_G,E_G)$ and H = $(V_H,E_H)$ consists of determining a mapping M which associates nodes of the graph G to H and vice versa. Different constraints can be imposed onto M which results in different mapping types: monomorphism, isomorphism, graph-subgraph isomorphism are the most popular ones \cite{cordella1999performance}. Our problem falls under the category of graph monomorphism . 
@@ -369,23 +371,31 @@ mapping $\phi( V_G) \rightarrow  V_H$ : for which $\forall \text{ v,w} \in V_G:(
 
 The relationship between edges of the graphs are equivalence for subgraph isomorphism, and for Monomorphism  relationship  is an implication.
 
-A problem of finding all the Monomorphisms of the pattern graph into the base graph is defined as Monomorphism problem. Graph Monomorphism is a NP-Complete problem \cite{Garey:1979:CIG:578533}. 
+A problem of finding all the Monomorphisms of the pattern graph into the base graph is defined as Monomorphism problem. Graph Monomorphism is an NP-Complete problem \cite{Garey:1979:CIG:578533}. 
 \subsection{Related Work}
 
 Graph matching is widely used in pattern recognition and image processing applications. Graph matching also finds its application in the field of biomedical and biological applications. 
-Most of the algorithms that are developed for purpose of graph matching uses tree search of some form with backtracking.
+Most of the algorithms that are developed for the purpose of graph matching uses tree search of some form with backtracking.
 The key principle is that there will be a partial mapping which will be initially empty and the mappings gets expanded iteratively by adding to it new pairs of matched node. The matched nodes are chosen based on the conditions determined by the matching type.
 
-The first prominent and one of the most widely used algorithm in the area of graph matching was proposed by \citeauthor{Ullmann:1976:ASI:321921.321925} \cite{Ullmann:1976:ASI:321921.321925}. Ullmann algorithm addresses the problem of graph isomorphism, sub graph isomorphism , graph monomorphism. Ullmann algorithm is based on  depth-first search with backtracking. To prune unfruitful matches the author proposes a refinement procedure, which employs conditions based on the knowledge of the adjacent nodes and the degree of the nodes that are being matched. 
-\citeauthor{4308468} in \cite{4308468} propose a graph monomorphism algorithm. The authors formulate the graph monomorphism problem as a minimum weight clique problem of weighted nets . The major drawback of the algorithm is that the algorithm uses a $N^2 \times N^2$ matrix to represent netgraph obtained from the cartesian product of the nodes of two graphs under investigation.
+The first prominent and one of the most widely used algorithm in the area of graph matching was proposed by \citeauthor{Ullmann:1976:ASI:321921.321925} \cite{Ullmann:1976:ASI:321921.321925}.
+Ullmann algorithm addresses the problem of graph isomorphism, sub graph isomorphism , graph monomorphism. Ullmann algorithm is based on  depth-first search with backtracking.
+The author employs a procedure called \textit{refinement procedure}, which prunes unfruitful matches based on the knowledge of the adjacent nodes and the degree of the nodes that are being matched.
+
+\citeauthor{4308468} in \cite{4308468}, propose a graph monomorphism algorithm.
+The authors formulate the graph monomorphism problem as a minimum weight clique problem of weighted nets .
+The major drawback of the algorithm is that the algorithm uses a $N^2 \times N^2$ matrix to represent netgraph obtained from the cartesian product of the nodes of two graphs under investigation.
 N representing the number of nodes of the largest graph. This leads to large memory consumption, making the algorithm viable for only small graphs.
-A more recent algorithm for graph isomorphism, subgraph isomorphism, and monomorphism was proposed by \citeauthor{906251} in \cite{906251}, popular as VF algorithm. The authors define a heuristic that is based on the analysis of sets of nodes adjacent to the ones already considered in the partial mapping. The authors further improved the algorithm in 2001 in their paper \cite{cordella2001improved}. 
-The authors proposed a modification to the algorithm and called it VF2. The authors introduce a method to restore data structure, which enabled them to reduce the memory consumption from $O(N^2)$ to $O(N)$ where $N$ is the number of nodes in the graph, thus enabling the algorithm to work with large graphs.
+A more recent algorithm for graph isomorphism, subgraph isomorphism, and monomorphism was proposed by \citeauthor{906251} in \cite{906251}, popular as VF algorithm. 
+The authors define a set of rules that are based on the sets of nodes connected to the ones that are already present in the partial mapping.
+The authors further improved the algorithm in 2001 in their paper \cite{cordella2001improved}. 
+The authors proposed a modification to the algorithm and called it VF2.
+The authors introduce a method to restore data structure, which enabled them to reduce the memory consumption from $O(N^2)$ to $O(N)$ where $N$ is the number of nodes in the graph, thus enabling the algorithm to work with large graphs.
 In our work, we use the VF2 algorithm to obtain the mappings between the spanning tree and grid graph.
 
 \subsection{VF2}
 
-In this section, we give a brief description of VF2 algorithm.\\
+In this section, we give a brief description of the VF2 algorithm.
 
 \begin{figure}
 
@@ -446,10 +456,10 @@ Feasibility Rules are used to check the consistency of the partial solution s' o
 In the algorithm, those candidates $(n,m)$ are pruned if n is not connected to already matched nodes in base graph $G$
 (i.e nodes of $G$ included in $M(s)$).
 Subsequently, the pruning step also removes those node-pairs $(n,m)$ in which m is not connected to the matched 
-nodes in the pattern graph $H$. These pruning rules assume that the query and data graph are connected.\\
+nodes in the pattern graph $H$. These pruning rules assume that the query and data graph are connected.
 
 The algorithm also compares the number of neighboring nodes of each n and m that are connected to nodes in $M(s)$ but are not
-included in $M(s)$. The number of such nodes in the base graph must be greater than or equal to the number of such nodes in the pattern graph.\\
+included in $M(s)$. The number of such nodes in the base graph must be greater than or equal to the number of such nodes in the pattern graph.
 
 Finally, the number of neighboring nodes of each of $n$ and $m$ that are not directly connected to nodes in $M(s)$ are compared. The number of 
 such nodes in the base graph must be greater than or equal to the number of such nodes in the pattern graph.
@@ -471,10 +481,12 @@ Computational complexity of the VF2 depends on two factors:
 \item Number of SSR visited.
 \end{itemize}
 
-According to the authors, the former has a time complexity of $O(N)$ . For the latter the authors consider a best case; where only one of the potential mappings are feasible which makes the computation complexity $O(N)$ and thus making the overall complexity $O(N^2)$. In the worst case, the algorithm has to explore all the states. This can happen when every node is connected to every other node (base graph is a complete graph) and the graph exhibits strong symmetry. The authors show that the complexity in such a condition is $O(N!)$ and thus making the total complexity $O(N!N)$.
-In our case, we show the order of complexity for an 8-neighborhood grid, we consider such an arrangement as it represents high connectivity that is possible for a sensor grid.
+According to the authors, the former has a computational complexity of $O(N)$ . For the latter the authors consider a best case; where only one of the potential mappings are feasible which makes the computation complexity $O(N)$ and thus making the overall complexity $O(N^2)$. In the worst case, the algorithm has to explore all the states. This can happen when every node is connected to every other node (base graph is a complete graph) and the graph exhibits strong symmetry. The authors show that the complexity in such a condition is $O(N!)$ and thus making the total complexity $O(N!N)$.
+
+In our case, we show the order of complexity for an 8-neighbor grid as shown in the figure \ref{fig:neighborhoodGrid}, we consider such an arrangement as it represents high connectivity that is possible for a sensor grid.
 The worst case for such a grid will arise when at every stage of the search tree the algorithm has to explore every possible branch.
  Since it's an 8-neighborhood grid all the nodes except the ones at the edges of the grid will have 8 neighbors.
+ Consider the case as shown in the figure \ref{fig:neighborhoodGrid} for node b it has 7 possible branch (marked in red) other than the branch connected to b, as b is the parent node and has already been assigned.
  As one of the neighboring nodes would be the parent node the node at stage $i$ will have $7^{i}$ possibilities to explore and stage $N$ there will be $7^n$ possibilities to explore as illustrated in the figure \ref{fig:ccO}.
  The total number of states to explore will be given by the sum:
 \begin{flalign*}
@@ -489,6 +501,42 @@ The worst case for such a grid will arise when at every stage of the search tree
 
 Thus computational complexity is $O(7^NN)$
 
+\begin{figure}
+\begin{tikzpicture}
+\draw(0,0) node[circle,fill=black](a){};
+\draw(1,0) node[circle,fill=black](b){};
+\draw(0,1) node[circle,fill=black](c){};
+\draw(1,1) node[circle,fill=black](d){};
+\draw(0,2) node[circle,fill=black](e){};
+\draw(1,2) node[circle,fill=black](f){};
+\draw(0,3) node[circle,fill=black](g){};
+\draw(1,3) node[circle,fill=black](h){};
+
+\draw(2,0) node[circle,fill=black](i){};
+\draw(3,0) node[circle,fill=black](j){};
+\draw(2,1) node[circle,fill=black](k){};
+\draw(3,1) node[circle,fill=black](l){};
+\draw(2,2) node[circle,fill=black,label=above:b](m){};
+\draw(3,2) node[circle,fill=black](n){};
+\draw(2,3) node[circle,fill=black,label=above:a](o){};
+\draw(3,3) node[circle,fill=black](p){};
+\draw[dashed](a)--(b) (b)--(c) (c)--(d) (a)--(d) (b)--(d)
+(e)--(f) (a)--(c) (g)--(h)  (c)--(e) (e)--(g) (h)--(f) 
+(f)--(d) (c)--(f) (e)--(h) (g)--(f)
+
+ (i)--(j) (j)--(k)  (k)--(m) (m)--(l) (e)--(i) (i)--(k)(l)--(j) (k)--(m) (n)--(l) 
+ (k)--(l)  (m)--(n) (n)--(o) (o)--(p) (i)--(l) (m)--(p) (m)--(o) (m)--(p) (m)--(o)  (m)--(n)
+ (p)--(n) (n)--(k)
+(m)--(f) 
+ (b)--(i)  (b)--(k)  (d)--(i)  (d)--(m) (f)--(k) (h)--(m) (f)--(o) (d)--(k) (f)--(m) (h)--(o); 
+ \draw[red] (m)--(f)  (k)--(m)(m)--(l)  (m)--(p) (m)--(n) (m)--(d) (m)--(h);
+ \draw[blue](m)--(o);
+\end{tikzpicture}
+\caption{A 8 neighbor grid}
+\label{fig:neighborhoodGrid}
+\end{figure}
+
+
 \begin{figure}[!ht]
 \includegraphics[scale=0.5]{./pics/tree.png}
 \caption{All the visited states in case of a 8 neighborhood grid with n nodes.}
@@ -501,7 +549,7 @@ Thus computational complexity is $O(7^NN)$
 After we obtain the various mappings. We need to decide which out of the various mappings gives the actual placement of the sensors on the grid. To identify the correct mapping we compute $GCS$ as explained in section \ref{sec:gcs}. We calculate the grid correlation sum for all the mappings obtained and the mappings which give the maximum sum will be the actual placement of the sensors on the grid. 
 \subsection{Limitations}
 
-Our method  can identify the location of the sensors upto rotational symmetry. $GCS$ remains the same for a sensor arrangement which is rotationally symmetrically to the original sensor arrangements as the adjacency between the sensor nodes is maintained, illustrated in the two arrangements that are shown in the figure \ref{fig:symm} and \ref{fig:rotationalSymm}. Therefore when we pick the mappings which have the highest $GCS$ we get multiple mappings. These mappings include the actual arrangement and arrangements which are rotationally symmetrical to the actual arrangement.
+Our method  can identify the location of the sensors up to rotational symmetry. $GCS$ remains the same for a sensor arrangement which is rotationally symmetrically to the original sensor arrangements as the adjacency between the sensor nodes is maintained, illustrated in the two arrangements that are shown in the figure \ref{fig:symm} and \ref{fig:rotationalSymm}. Therefore when we pick the mappings which have the highest $GCS$ we get multiple mappings. These mappings include the actual arrangement and arrangements which are rotationally symmetrical to the actual arrangement.
 
 \begin{figure}[!ht]
 \begin{floatrow}
@@ -510,7 +558,7 @@ Our method  can identify the location of the sensors upto rotational symmetry. $
 \foreach \y in {0,1,2}
  \foreach \x in {0,1,2}
 {\pgfmathtruncatemacro{\label}{\x-3*\y+7}
-\node[darkstyle](\x\y) at (1.5*\x,1.5*\y){\label};
+\node[darkstyle](\x\y) at (1.5*\x,1.5*\y){G\label};
 }
  \foreach \x in {0,1,2}
     \foreach \y [count=\yi] in {0,1}  
@@ -527,17 +575,17 @@ Our method  can identify the location of the sensors upto rotational symmetry. $
 \begin{tikzpicture}[darkstyle/.style={circle,draw,fill=gray!40,minimum size=5}]
 
 \draw[step = 1.5,thick ] (7.4,0) grid (10.5,3);
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (7) at (7.5,0) {9};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (4) at (7.5,1.5) {6};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (1) at (7.5,3) {3};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (7) at (7.5,0) {G9};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (4) at (7.5,1.5) {G6};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (1) at (7.5,3) {G3};
 
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (8) at (9,0) {8};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (5) at (9,1.5) {5};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (2) at (9,3) {2};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (8) at (9,0) {G8};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (5) at (9,1.5) {G5};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (2) at (9,3) {G2};
 
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (9) at (10.5,0) {7};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (3) at (10.5,1.5) {4};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (6) at (10.5,3) {1};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (9) at (10.5,0) {G7};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (3) at (10.5,1.5) {G4};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (6) at (10.5,3) {G1};
 %\draw [<->,red] (3.east) to [out=60,in=60] (6.east);
 
 \end{tikzpicture}
@@ -571,14 +619,14 @@ Now if we consider arrangement as shown in the figure \ref{fig:ntime2} and \ref{
 
 \begin{tikzpicture}
 
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (1) at (0,0) {1};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (3) at (1.5,0) {3};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (5) at (3,0) {5};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (7) at (4.5,0) {7};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (2) at (0,1.5) {2};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (4) at (1.5,1.5) {4};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (6) at (3,1.5) {6};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (8) at (4.5,1.5) {8};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (1) at (0,0) {G1};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (3) at (1.5,0) {G3};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (5) at (3,0) {G5};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (7) at (4.5,0) {G7};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (2) at (0,1.5) {G2};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (4) at (1.5,1.5) {G4};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (6) at (3,1.5) {G6};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (8) at (4.5,1.5) {G8};
 \draw (1)--(2) (1)--(3) (1)--(4) (2)--(3) (3)--(4) (4)--(6)   (2)--(4)  (4)--(5) (3)--(6) (3)--(5) (5)--(6) (6)--(7) (5)--(8) (5)--(7) (7)--(8) (8)--(6);
 \end{tikzpicture}
 \caption{Actual arrangement of $2 \times 4$ grid.}
@@ -587,14 +635,14 @@ Now if we consider arrangement as shown in the figure \ref{fig:ntime2} and \ref{
 
 \ffigbox{
 \begin{tikzpicture}
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (2) at (0,0) {2};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (3) at (1.5,0) {3};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (5) at (3,0) {5};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (7) at (4.5,0) {7};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (1) at (0,1.5) {1};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (4) at (1.5,1.5) {4};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (6) at (3,1.5) {6};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (8) at (4.5,1.5) {8};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (2) at (0,0) {G2};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (3) at (1.5,0) {G3};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (5) at (3,0) {G5};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (7) at (4.5,0) {G7};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (1) at (0,1.5) {G1};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (4) at (1.5,1.5) {G4};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (6) at (3,1.5) {G6};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (8) at (4.5,1.5) {G8};
 \draw (1)--(2) (1)--(3) (1)--(4) (2)--(3) (3)--(4) (4)--(6)   (2)--(4)  (4)--(5) (3)--(6) (3)--(5) (5)--(6) (6)--(7) (5)--(8) (5)--(7) (7)--(8) (8)--(6);
 
 

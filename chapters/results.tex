@@ -16,7 +16,7 @@ This is done because there can be parts of the data which might give pseudo high
 \label{fig:time}
 \end{figure}
 
-\section{HTC34 testbed}
+\section{Experimental testbed}
 As described earlier, the testbed consists of 8 sensors arranged as a $2 \times 4$ grid.
 The field of view of the sensors used in the testbed has a radius of 2.6m.
 Using the coordinates of the vertex of the grid and the field of view of the sensors we can determine the neighboring vertices for every vertex of the grid.
@@ -166,38 +166,38 @@ dataset & \begin{tabular}[c]{@{}c@{}}Number of\\ states visited\end{tabular} & M
 \begin{figure}[!ht]
 \begin{tikzpicture}
 \begin{scope}
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {7};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {8};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {5};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {6};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {3};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {4};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {1};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {2};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {G7};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {G8};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {G5};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {G6};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {G3};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {G4};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {G1};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {G2};
 \end{scope}
 
 
 \begin{scope}[shift={(4,0)}]
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {8};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {7};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {6};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {5};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {4};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {3};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {2};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {1};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {G8};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {G7};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {G6};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {G5};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {G4};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {G3};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {G2};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {G1};
 \end{scope}
 
 
 \begin{scope}[shift={(8,0)}]
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {1};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {2};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {3};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {4};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {5};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {6};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {7};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {8};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {G1};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {G2};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {G3};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {G4};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {G5};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {G6};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {G7};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {G8};
 \end{scope}
 
 
@@ -270,7 +270,7 @@ Before we use the complete layout of the grid, we carry out our analysis on a $4
 
 \subsection{Data Length}
 By using the method described in section \ref{sec:dataLength} we determine that 85hrs of processed data is required to obtain the location of the sensors accurately.  Figure \ref{fig:evst} gives an account of error for every block of data of length t, over the entire length of the data, with $t$ varying from 10 to 100 hours.
-As it can be seen from the figure, for $t>85$ the error observed for the blocks of data is 0. Hence to carry out our analysis we use data of length 85hrs. Required length of the data in case of WSU data set is much larger compared to that of HTC34 testbed, the main reason can be because of the overlapping area in HTC34 testbed is much higher than the overlapping area in Tokyo testbed, and the usage patterns are also different for both the testbed. HTC34 testbed is more active compared to Tokyo testbed.
+As it can be seen from the figure, for $t>85$ the error observed for the blocks of data is 0. Hence to carry out our analysis we use data of length 85hrs. Required length of the data in case of WSU data set is much larger compared to that of our experimental testbed, the main reason can be because of the overlapping area in our experimental testbed is much higher than the overlapping area in Tokyo testbed, and the usage patterns are also different for both the testbed. Our experimental testbed is more active compared to Tokyo testbed.
 \begin{figure}[!ht]
 \includegraphics[scale=0.25]{./pics/errorvstime.png}
 \caption{Error per block of length t for various values of t across the 200 hours of data for the $4 \times 3$ layout.}
@@ -279,7 +279,7 @@ As it can be seen from the figure, for $t>85$ the error observed for the blocks 
 \end{figure}
 
 \subsection{Results}
-Data is split in to two datasets of 85hrs each. The grid graph is as shown in the figure \ref{fig:casas}. The obtained MST for both the datasets are as shown in figure \ref{fig:MST4x3}. The result obtained from the method is presented in the table \ref{tab:wsu43res}. Both brute force and our method gives the same locations of the sensors as the result, but the number of arrangements that had to be checked in case of brute-force is 479001600 whereas with our method the number of mappings that had to be checked were 2120 and 1811 for dataset 1 and 2 respectively. A brute force search for the 12 sensor arrangement required approximately 27hrs to compute the results. Whereas our method needed on an average 10 seconds to compute the results. As can be seen from the table \ref{tab:resHTC} and \ref{tab:wsu43res} the number of mappings obtained is larger in case of sensor topology of HTC34 testbed compared to a $4 \times 3$ sub-layout topology of Tokyo testbed, even though the number of sensors is more in case of the latter. This is because HTC34 arrangement exhibits rotational symmetry. Due to which for every valid mapping between the MST and grid, the mappings which are rotationally symmetric will also be valid. Thus increasing the number of mappings.
+Data is split in to two datasets of 85hrs each. The grid graph is as shown in the figure \ref{fig:casas}. The obtained MST for both the datasets are as shown in figure \ref{fig:MST4x3}. The result obtained from the method is presented in the table \ref{tab:wsu43res}. Both brute force and our method gives the same locations of the sensors as the result, but the number of arrangements that had to be checked in case of brute-force is 479001600 whereas with our method the number of mappings that had to be checked were 2120 and 1811 for dataset 1 and 2 respectively. A brute force search for the 12 sensor arrangement required approximately 27hrs to compute the results. Whereas our method needed on an average 10 seconds to compute the results. As can be seen from the table \ref{tab:resHTC} and \ref{tab:wsu43res} the number of mappings obtained is larger in case of sensor topology of our testbed compared to a $4 \times 3$ sub-layout topology of Tokyo testbed, even though the number of sensors is more in case of the latter. This is because HTC34 arrangement exhibits rotational symmetry. Due to which for every valid mapping between the MST and grid, the mappings which are rotationally symmetric will also be valid. Thus increasing the number of mappings.
 \begin{figure}[!ht]
 \centering
 \begin{subfigure}[b]{0.4\textwidth}
@@ -314,7 +314,7 @@ Dataset                & \begin{tabular}[c]{@{}c@{}}Number of \\ states visited\
 After validating the $4 \times 3$ sub layout, we apply our method to the complete layout of Tokyo testbed.
 
 \subsection{Data length}
-After applying the processing step considering all the sensors, we are left with only 27hrs of data. The main reason for the drastic fall in the data length is that sensor  1 and 4 are highly inactive and very less triggers are observed as a result majority of the data had to be filtered out. We perform our analysis with the processed data.
+After applying the processing step considering all the sensors, we are left with 27hrs of data. The main reason for this is that sensor 1 and 4 are highly inactive and very less triggers are observed as a result majority of the data had to be filtered out. We perform our analysis with the processed data.
 
 
 \subsection{Results}
@@ -322,7 +322,7 @@ After applying the processing step considering all the sensors, we are left with
 We use the obtained data to compute the location of the sensors. The MST for the complete layout is as shown in figure \ref{fig:MST43}. We obtain two different mappings. 
 Nodes 20 and 19 show rotational symmetry with respect to node 21 so in one arrangement nodes 19 and 20 are mapped to their respective locations in the other mapping nodes 20 and 19 locations are interchanged. As the sensors are equi-distant from node 21, the locations cannot be uniquely identified using a $WGAM$. 
 The results are as shown in the table \ref{tab:wsu43Resl}. We observe an error of 6.9\% as location of three sensors are incorrectly mapped.
-Brute force search for 43 sensors was not computed as the search space is of the order of $10^{52}$, even if the computer is able to compute $10^{12}$ combinations per second it will take 7e+33 years to finish evaluation.
+Brute force search for 43 sensors was not computed as the search space is of the order of $10^{52}$, and is computationally prohibitive.
 While our proposed method was able to compute the sensor location within 414s $\approx$ 6mins. 
   
   
@@ -387,7 +387,7 @@ One of the reason for such distribution of correlation can be due to the short d
 
 \section{Summary}
 
-In this chapter we present the results obtained for the proposed method. Table \ref{tab:resSummary} summarizes the results for HTC34 and the Tokyo testbed. As can be seen the proposed method is able to determine the locations of the sensors with no error for HTC34 and sub layout of Tokyo testbed. For the complete layout of the testbed we obtain an error with respect to the location of three sensors, on further investigation we see that the main reason for the error is due to the shortage of the data. From our analysis we can conclude that the accuracy of the results mainly depends on the data length and the level of activity happening in the space under consideration. We also see that the amount of data required for analysis becomes more if the overlapping regions between the sensors is less.
+In this chapter we present the results obtained for the proposed method. Table \ref{tab:resSummary} summarizes the results for our experimental testbed and the Tokyo testbed. As can be seen the proposed method is able to determine the locations of the sensors with no error for our experimental testbed and sub layout of Tokyo testbed. For the complete layout of the testbed we obtain an error with respect to the location of three sensors, on further investigation we see that the main reason for the error is due to the shortage of the data. From our analysis we can conclude that the accuracy of the results mainly depends on the data length and the level of activity happening in the space under consideration. We also see that the amount of data required for analysis becomes more if the overlapping regions between the sensors is less.
 
 \begin{table}[]
 \centering
