@@ -8,7 +8,7 @@ error=\frac{\text{Number of misplaced sensors}}{\text{Number of sensors}}
 \section{Data Length}
 \label{sec:dataLength}
 An important aspect to know in a data driven method is, how much of data is required in order to get accurate results? To answer this question, the entire dataset of length $T$ is divided into blocks of time interval $t$ as shown in the figure \ref{fig:time}. We iteratively increment $t$ until a value beyond which error observed for all the blocks of data of length $t$ is zero. 
-This is done because there can be parts of the data which might give pseudo high correlation value between two non neighboring nodes or vice versa due to various reasons. As the data length increases, the effect of the data influencing the incorrect correlation values between the sensors diminishes.
+This is done because there can be parts of the data which might give pseudo high correlation value between two non neighboring nodes or vice versa due to various reasons like noise in the sensor data, large period of inactivity etc. As the data length increases, the effect of the data influencing the false correlation values between the non neighboring sensors diminishes.
 
 \begin{figure}[!ht]
 \includegraphics[scale=0.5]{./pics/time.png}
@@ -31,14 +31,14 @@ The co-ordinates of the vertices, calculation of the field of view for the senso
 
 \begin{figure}[!ht]
 \begin{tikzpicture}[scale=0.6]
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (1) at (0,0)     {1} ;
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (3) at (2.5,0)   {3};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (5) at (5,0)     {5};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (7) at (7.5,0)   {7};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (2) at (0,2.2)   {2};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (4) at (2.5,2.2) {4};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (6) at (5,2.2)   {6};
-\node[circle,draw=black,fill=white!80!black,minimum size=5] (8) at (7.5,2.2) {8};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (1) at (0,0)     {G1} ;
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (3) at (2.5,0)   {G3};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (5) at (5,0)     {G5};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (7) at (7.5,0)   {G7};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (2) at (0,2.2)   {G2};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (4) at (2.5,2.2) {G4};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (6) at (5,2.2)   {G6};
+\node[circle,draw=black,fill=white!80!black,minimum size=5] (8) at (7.5,2.2) {G8};
 
 \begin{scope}
   \clip (0,0)      circle(2.6);
@@ -153,15 +153,15 @@ dataset & \begin{tabular}[c]{@{}c@{}}Number of\\ states visited\end{tabular} & M
 9 & 11752 & 2656 & 4 & 0 & 40320 & 4 & 0 \\ \hline
 10 & 11368 & 2664 & 4 & 0 & 40320 & 4 & 0 \\ \hline
 \end{tabular}
-\caption{Results obtained for HTC34 testbed.}
+\caption{Results obtained for experimental testbed.}
 \label{tab:resHTC}
 \end{table}
 
-\begin{wrapfigure}{R}{0.5\textwidth}
+\begin{figure}[!ht]
 \includegraphics{./pics/comparision.png}
 \caption{Comparing the search space for brute force and our method}
 \label{fig:comparision}
-\end{wrapfigure}
+\end{figure}
 
 \begin{figure}[!ht]
 \begin{tikzpicture}
@@ -202,17 +202,17 @@ dataset & \begin{tabular}[c]{@{}c@{}}Number of\\ states visited\end{tabular} & M
 
 
 \begin{scope}[shift={(12,0)}]
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {2};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {1};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {4};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {3};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {6};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {5};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {8};
-\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {7};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (1) at (0,0)   {G2};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (2) at (1.5,0) {G1};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (3) at (0,1)   {G4};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (4) at (1.5,1) {G3};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (5) at (0,2)   {G6};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (6) at (1.5,2) {G5};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (7) at (0,3)   {G8};
+\node[circle,draw=black,fill=white!80!black,minimum size=3] (8) at (1.5,3) {G7};
 \end{scope}
 \end{tikzpicture}
-\caption{Arrangements obtained as solution for the HTC34 testbed}
+\caption{Arrangements obtained as solution for the experimental testbed}
 \label{fig:arrangement4x2}
 \centering
 \end{figure}
@@ -270,7 +270,7 @@ Before we use the complete layout of the grid, we carry out our analysis on a $4
 
 \subsection{Data Length}
 By using the method described in section \ref{sec:dataLength} we determine that 85hrs of processed data is required to obtain the location of the sensors accurately.  Figure \ref{fig:evst} gives an account of error for every block of data of length t, over the entire length of the data, with $t$ varying from 10 to 100 hours.
-As it can be seen from the figure, for $t>85$ the error observed for the blocks of data is 0. Hence to carry out our analysis we use data of length 85hrs. Required length of the data in case of WSU data set is much larger compared to that of our experimental testbed, the main reason can be because of the overlapping area in our experimental testbed is much higher than the overlapping area in Tokyo testbed, and the usage patterns are also different for both the testbed. Our experimental testbed is more active compared to Tokyo testbed.
+As it can be seen from the figure, for $t>85hrs$ the error observed for the blocks of data is 0. Hence to carry out our analysis we use data of length 85hrs. Required length of the data in case of WSU data set is much larger compared to that of our experimental testbed, the main reason can be because of the overlapping area in our experimental testbed is much higher than the overlapping area in Tokyo testbed, and the usage patterns are also different for both the testbed. Our experimental testbed is more active compared to Tokyo testbed.
 \begin{figure}[!ht]
 \includegraphics[scale=0.25]{./pics/errorvstime.png}
 \caption{Error per block of length t for various values of t across the 200 hours of data for the $4 \times 3$ layout.}
@@ -279,7 +279,7 @@ As it can be seen from the figure, for $t>85$ the error observed for the blocks 
 \end{figure}
 
 \subsection{Results}
-Data is split in to two datasets of 85hrs each. The grid graph is as shown in the figure \ref{fig:casas}. The obtained MST for both the datasets are as shown in figure \ref{fig:MST4x3}. The result obtained from the method is presented in the table \ref{tab:wsu43res}. Both brute force and our method gives the same locations of the sensors as the result, but the number of arrangements that had to be checked in case of brute-force is 479001600 whereas with our method the number of mappings that had to be checked were 2120 and 1811 for dataset 1 and 2 respectively. A brute force search for the 12 sensor arrangement required approximately 27hrs to compute the results. Whereas our method needed on an average 10 seconds to compute the results. As can be seen from the table \ref{tab:resHTC} and \ref{tab:wsu43res} the number of mappings obtained is larger in case of sensor topology of our testbed compared to a $4 \times 3$ sub-layout topology of Tokyo testbed, even though the number of sensors is more in case of the latter. This is because HTC34 arrangement exhibits rotational symmetry. Due to which for every valid mapping between the MST and grid, the mappings which are rotationally symmetric will also be valid. Thus increasing the number of mappings.
+Data is split in to two datasets of 85hrs each. The grid graph is as shown in the figure \ref{fig:casas}. The obtained MST for both the datasets are as shown in figure \ref{fig:MST4x3}. The result obtained from the method is presented in the table \ref{tab:wsu43res}. Both brute force and our method gives the same locations of the sensors as the result, but the number of arrangements that had to be checked in case of brute-force is 479001600 whereas with our method the number of mappings that had to be checked were 2120 and 1811 for dataset 1 and 2 respectively. A brute force search for the 12 sensor arrangement required approximately 27hrs to compute the results. Whereas our method needed on an average 10 seconds to compute the results. As can be seen from the table \ref{tab:resHTC} and \ref{tab:wsu43res} the number of mappings obtained is larger in case of sensor topology of our testbed compared to a $4 \times 3$ sub-layout topology of Tokyo testbed, even though the number of sensors is more in case of the latter. This is because the arrangement in our experimental testbed exhibits rotational symmetry. Due to which for every valid mapping between the MST and grid, the mappings which are rotationally symmetric will also be valid. Thus increasing the number of mappings.
 \begin{figure}[!ht]
 \centering
 \begin{subfigure}[b]{0.4\textwidth}
@@ -350,7 +350,7 @@ Dataset & \begin{tabular}[c]{@{}c@{}}Number of \\ states visited\end{tabular} & 
 \begin{subfigure}[b]{0.4\textwidth}
 \centering
 \includegraphics[scale=0.5]{./pics/grid_arr.png}
-\caption{Location of vertices 34,36 and 37 with neighboring vertices marked.}
+\caption{Location of vertices 34, 36 and 37 with neighboring vertices marked.}
 \label{fig:true_arr}
 \qquad
 \end{subfigure}
@@ -371,7 +371,7 @@ Dataset & \begin{tabular}[c]{@{}c@{}}Number of \\ states visited\end{tabular} & 
 \begin{subfigure}[b]{0.4\textwidth}
 \centering
 \includegraphics[scale=0.5]{./pics/long_data_arr.png}
-\caption{Correlation values with dataset of long duration}
+\caption{Arrangement computed with with dataset of long duration}
 \label{fig:arr}
 \qquad
 \end{subfigure}
@@ -396,7 +396,7 @@ In this chapter we present the results obtained for the proposed method. Table \
 \begin{tabular}{|c|c|c|c|}
 \hline
 Testbed                & Brute force Mappings  & Graph matching mappings & Error(\%) \\ \hline
-HTC34                  & 40320                 & 2696                    & 0         \\ \hline
+Experimental testbed                  & 40320                 & 2696                    & 0         \\ \hline
 Tokyo (sublayout)      & 479001600             & 1966                     & 0         \\ \hline
 Tokyo(complete layout) & $6.04 \times 10^{52}$ & 70656                  & 6.9       \\ \hline
 \end{tabular}

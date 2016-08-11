@@ -1,31 +1,33 @@
 \chapter{Introduction}
 \label{chp:introduction}
 \section{Motivation}
-The European Union (EU) has pledged to cut the consumption of primary energy by 20\%, by the year 2020.  It is estimated that buildings consume 40\% of the energy produced\footnote{according to value published at https://ec.europa.eu/energy/en/topics/energy-efficiency/buildings }.  This has resulted in an increase in the demand to reduce the energy consumption of buildings. To reduce the consumption of energy, building automation systems (BAS) are being widely employed. BAS are computer-based systems that help to manage, control and monitor building technical services (HVAC, lighting etc.) and the energy consumption of devices used by the building.
+The European Union (EU) has pledged to cut the consumption of primary energy by 20\%, by the year 2020.  It is estimated that buildings consume 40\% of the energy produced\footnote{according to value published at https://ec.europa.eu/energy/en/topics/energy-efficiency/buildings }.  This has resulted in an increase in the demand to reduce the energy consumption of buildings. To reduce the consumption of energy, building automation systems (BAS) are being widely employed. BAS are computer-based systems that help to manage, control and monitor building technical services (HVAC, lighting etc.) and the energy consumption of devices used by the building. It is estimated that BAS can save a building between 5 percent to 30 percent on the utility cost by managing HVAC and lighting systems\cite{bas}.
 
- BAS deploy a huge amount of sensors, which provide inputs to perform efficient control of various services like HVAC and lighting. BAS brings with it various benefits, at the same time, offers numerous challenges too. For BAS, sensor measurements alone are not sufficient to understand the condition of the facilities, unless combined with meta-data associated with the sensors.
-Meta-data as defined in \cite{gao2015data} refers to any information associated  with the device that help to contextualize the measurements or control signals regularly being sent from/to the device, such as the location within the building, the physical phenomenon being sensed, etc.
- One of the important meta-data required is that of the physical location of the sensor as discussed in  \cite{liu2009requirements}.
+BAS deploy a huge amount of sensors, which provide inputs to perform efficient control of various services. BAS brings with it various benefits, at the same time, offers numerous challenges too. For BAS, sensor measurements alone are not sufficient to understand the condition of the facilities, unless combined with meta-data associated with the sensors.
+Meta-data as defined in \cite{gao2015data} refers to any information associated  with the device that help to contextualize the measurements or control signals regularly being sent from/to the device, such as the location within the building, the physical phenomenon being sensed, etc. One of the major challenges in a BAS system is generating and updating the meta-data of the sensor.
+One of the important meta-data required is that of the physical location of the sensor as discussed in  \cite{liu2009requirements}.
 As the size and distribution of the deployed sensors are high, it is highly cumbersome and error prone to manually maintain the meta-data about the sensor placement. Apart from being error prone, the manual configuration has to be repeated every time there is a change in the meta-data. Change in meta-data can be due to various reasons, such as a change in the office setup, replacement and/or relocation of sensors. All these factors result in inaccurate information about the location of the sensors. Without the accurate information of the location of the sensors, interpreting the data collected from the sensor is difficult and also can be misleading. This could result in the decrease in the effectiveness of the deployed BAS systems. Hence there is a need to develop methods to accurately determine the location of the sensors within the building.
-\section{System Consideration}
-One of the key component in the BAS is providing smart lighting control. Lighting accounts for 11 percent of energy use in residential and 18 percent in commercial buildings \cite{website}. To provide lighting control occupancy sensors and light sensors are generally placed on the ceiling of the buildings. In our work here we consider such a arrangement of the sensors.
+\section{System Description}
+Smart lighting control is one of the major component of BAS. Lighting is responsible for 11 percent  and 18 percent of the energy consumption in case of residential and commercial buildings respectively\cite{website}. 
+State of the art lighting control employs co-located occupancy sensors and light sensors, placed on luminaries which are attached to the ceiling\cite{pandharipande2015smart,caicedo2016smart,van2014distributed}.
+In this thesis, we consider such ceiling based sensor grid consisting of occupancy sensors. We represent the sensor grid as a graph $G$ with the sensors located on the vertices of the graph.
 
 \section{Problem Statement}
 
-Several studies \cite{Hong:2013:TAS:2528282.2528302,doi:10.1061/9780784413616.226,Koc:2014:CLC:2674061.2674075,Lu:2014:SBS:2648771.2629441,ellis2012creating,muller2014automated,marinakis2005learning} have been carried out to infer the sensor location from sensor data. Most of the methods developed so far have identified ways to cluster the sensors that are located within the same room; however the methods do not identify these rooms within the building \cite{doi:10.1061/9780784413616.226}.  Therefore the research question that is being tackled in this work is:
+Several studies \cite{Hong:2013:TAS:2528282.2528302,doi:10.1061/9780784413616.226,Koc:2014:CLC:2674061.2674075,Lu:2014:SBS:2648771.2629441,ellis2012creating,muller2014automated,marinakis2005learning} have been carried out to infer the sensor location from sensor data. Most of the methods developed so far have identified ways to cluster the sensors that are located within their proximity; however the methods do not identify where exactly on the grid each sensors are located in a dense sensor grid \cite{Hong:2013:TAS:2528282.2528302,doi:10.1061/9780784413616.226,Koc:2014:CLC:2674061.2674075}.  Therefore the research question that is being tackled in this work is:
 
-\textit{How to Automatically determine the sensor location utilizing the data from the sensors and the information about the grid (coordinates of the vertices constituting the grid)?}
+\textit{How to Automatically determine the location of the sensors utilizing binary data from the ceiling mounted occupancy sensors and the information about the grid (coordinates of the vertices constituting the grid)?}
 
 \section{Contribution of the thesis}
-This work makes the following contribution:
+The main contribution of the thesis are:
 \begin{itemize}
-\item Using the energy of the sensor data stream as a feature to distinguish neighboring sensors from non neighboring sensors for binary occupancy sensor data.
-\item Reducing the problem of determination of sensor locations  on the grid to a problem of graph matching.
+\item Energy feature of the binary occupancy sensor data is used to distinguish between neighboring and non neighboring nodes.
+\item Reducing the problem of determination of sensor locations  on the grid to a problem of graph matching \cite{conte2004thirty}.
 \end{itemize}
 
 \section{Outline of thesis}
 
-Rest of the thesis is organized as follows: in Chapter 2 we give a brief overview of related work. In chapter 3 we present the method that has been developed. In chapter 4 we describe our testbed setup. Next, in chapter 5 we present the results obtained by applying the method that we have developed on actual sensor data obtained from 2 different testbeds. In the end in chapter 6 we conclude the work done and discuss future work.
+The rest of the thesis is organized as follows: in chapter 2 we give a brief overview of related work. In chapter 3 we present the method that has been developed. In chapter 4 we describe our testbed setup. Next, in chapter 5 we present the results obtained by applying the method that we have developed on actual sensor data obtained from 2 different testbeds. In the end in chapter 6 we conclude the work done and discuss future work.
 
 
 %\section{Application}

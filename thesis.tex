@@ -30,6 +30,10 @@
 %\bibliographystyle{abbrvnat}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{bytefield}
+\usepackage[hyphens]{url}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{breaklinks=true}
+\urlstyle{same}
 
 % Graphics: different for pdflatex or dvi output, choose one
 %%\usepackage[dvips]{graphicx}
@@ -90,7 +94,7 @@ Dr. Christoph Lofi & TU Delft\\
 
 
 \newcommand{\reportAbstract}{Building automation systems are getting extremely popular due to increase in the demand to reduce energy consumption in residential and commercial  buildings. 
-As their applications increases, the complexity of the systems also increases making the installation and maintenance much more difficult. One of the main challenges is generating and updating the location meta-data of the sensors. Location meta-data is the primary input for many applications. Currently the location meta-data is being generated and maintained manually, this process is highly cumbersome and also prone to errors. An erroneous location information can make the BAS systems ineffective. Previous research have looked at clustering sensors based on their spatial locations, but not at locating the sensors in the space. In our method here we propose an automatic sensor data driven sensor location inference system. We reduce the problem of determining the location of sensors to a problem of graph matching using the correlation matrix and grid information. We use VF2 algorithm a popular graph matching algorithm in this work. Furthermore, we validate our algorithm with two different real world testbeds. We are able to locate all the sensors accurately for HTC34 testbed and for the Tokyo testbed we observe an error in the determination of sensor location for 3 out of the 43 sensors.
+As their applications increases, the complexity of the systems also increases making the installation and maintenance much more difficult. One of the main challenges is generating and updating the location meta-data of the sensors. Location meta-data is the primary input for many applications. Currently the location meta-data is being generated and maintained manually, this process is highly cumbersome and also prone to errors. An erroneous location information can make the BAS systems ineffective. Previous research have looked at clustering sensors based on their spatial locations, but not at locating the sensors in the space. In our method here we propose an automatic sensor data driven sensor location inference system. We reduce the problem of determining the location of sensors to a problem of graph matching using the correlation matrix and grid information. We use VF2 algorithm a popular graph matching algorithm in this work. Furthermore, we validate our algorithm with two different real world testbeds. We are able to locate all the sensors accurately for our experimental testbed and for the Tokyo testbed we observe an error in the determination of sensor location for 3 out of the 43 sensors.
 }
 \newcommand{\reportKeywords}{TODO KEYWORDS}
 %\newtheorem{theorem}{Theorem}[section]
@@ -152,10 +156,10 @@ As their applications increases, the complexity of the systems also increases ma
 
 % TABLE OF CONTENTS: starting at page vii
 \tableofcontents
-\setcounter{tocdepth}{1}
+
 
 \cleardoublepage
-
+\pagestyle{plain}
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
