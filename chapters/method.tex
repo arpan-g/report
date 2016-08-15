@@ -5,30 +5,36 @@ Consider a sensor grid as shown in the figure \ref{fig:Grid}, consisting of n no
 Out of these N ways we have to identify the actual locations of the sensors in the grid.
 \begin{figure}[!ht]
 \begin{tikzpicture}
-\draw(0,0) node[circle,fill=black]{};
-\draw(1.5,0) node[circle,fill=black]{};
+%\draw(0+rand,0+rand) node[circle,fill=black]{};
+%\draw(1.5+rand,0+rand) node[circle,fill=black]{};
 
-\draw(0,2) node[circle,fill=black]{};
-\draw(1.5,2) node[circle,fill=black]{};
-\draw(0,3.5) node[circle,fill=black]{};
-\draw(1.5,3.5) node[circle,fill=black]{};
-\foreach \x in {0,1.5,2,2.5,3,3.5,4}
-    \foreach \y in {0.5,1,1.5} 
+%\draw(0+rand,2+rand) node[circle,fill=black]{};
+%\draw(1.5+rand,2+rand) node[circle,fill=black]{};
+\draw(0,4) node[circle,fill=black]{};
+\draw(1.5,4) node[circle,fill=black]{};
+%\foreach \x in {0,1,2,3,4}
+ %   \foreach \y in {0,1,2} 
+%  {
+ %      \node [fill,circle]  (\x\y) at (\x+rand,\y+rand) {};} 
+%\draw(4,0) node[circle,fill=black]{};
+%\draw(4,2) node[circle,fill=black]{};
+%\draw(4,3.5) node[circle,fill=black]{};
+\foreach \x in {2,3,4,5,6}
+    \foreach \y in {4} 
   {
-       \node [fill,circle,scale=0.3]  (\x\y) at (\x,\y) {};} 
-\draw(4,0) node[circle,fill=black]{};
-\draw(4,2) node[circle,fill=black]{};
-\draw(4,3.5) node[circle,fill=black]{};
-\foreach \x in {2,2.5,3,3.5}
-    \foreach \y in {0,0.5,1,1.5,2,3.5} 
+       \node [fill,circle]  (\x\y) at (\x+0.25*rand,\y+0.25*rand) {};
+   } 
+   \foreach \x in {0,1,2,3,4,5,6}
+    \foreach \y in {0,1,2,3} 
   {
-       \node [fill,circle,scale=0.3]  (\x\y) at (\x,\y) {};} 
+       \node [fill,circle]  (\x\y) at (\x+0.25*rand,\y+0.25*rand) {};
+   }
        
-       \draw[thick](0,3.5) circle(1cm);
-       \draw[|->|, rotate around with nodes={90:(0,3.5)}]
-       (0,3.5)--(1,3.5) node[midway,fill=white,rotate with]{r};
-       \draw[|<->|](0,3.5)--(1.5,3.5) node[midway,fill=white]{d};
-       \draw[thick](1.5,3.5) circle(1cm);
+       \draw[thick](0,4) circle(1cm);
+       \draw[|->|, rotate around with nodes={90:(0,4)}]
+       (0,4)--(1,4) node[midway,fill=white,rotate with]{r};
+       \draw[|<->|](0,4)--(1.5,4) node[midway,fill=white]{d};
+       \draw[thick](1.5,4) circle(1cm);
        
 %\draw [decorate,decoration={brace,amplitude=10pt},xshift=-4pt,yshift=0pt]
 %(-0.5,0) -- (-0.5,3.5) node [black,midway,xshift=-0.6cm] 
@@ -39,7 +45,7 @@ Out of these N ways we have to identify the actual locations of the sensors in t
 
 \end{tikzpicture}
 \centering
-\caption{A sensor grid with field of view sensors being r.}
+\caption{A sensor grid with sensors field of view being r.}
 \label{fig:Grid}
 \end{figure}
 Before we explain the method, we introduce the definitions of the terms that are used in the thesis.
@@ -66,7 +72,7 @@ d_{i,j}=\sqrt{(x_i-x_j)^2 + (y_i-y_j)^2}
 From the definitions \ref{def:ns} and \ref{def:GAM}, we can say that sensors placed on neighboring vertices will be neighboring nodes and vise versa. As can be seen in the figure \ref{fig:Grid} there will be an overlap in the field of view between two sensors if the distance (d) between them is less than 2r.
 
 \section{Feature}
-As it has be shown previously\cite{Hong:2013:TAS:2528282.2528302,Koc:2014:CLC:2674061.2674075} that the neighboring sensors can be identified by computing the correlation values for the sensors raw data or a feature extracted from the raw sensor data. We commence our method similarly by identifying a feature which will aid us to do the same. As neighboring sensors have an overlapping field of view, they observe the same events and thus are highly correlated. On the raw signals of the PIR data stream we use a sliding window with $50\%$ overlap between the consecutive windows and compute the energy feature using the equation \ref{eq:energyEq}. 50\% overlapping window has been chosen as it has been shown to be effective for feature extraction previously\cite{bao2004activity}.
+As it has been shown previously in \cite{Hong:2013:TAS:2528282.2528302,Koc:2014:CLC:2674061.2674075}, that the neighboring sensors can be identified by computing the correlation values for the sensors raw data or a feature extracted from the raw sensor data. We commence our method similarly by identifying a feature which will aid us to do the same. As neighboring sensors have an overlapping field of view, they observe the same events and thus are highly correlated. On the raw signals of the PIR data stream we use a sliding window with $50\%$ overlap between the consecutive windows and compute the energy feature using the equation \ref{eq:energyEq}. 50\% overlapping window has been chosen as it has been shown to be effective for feature extraction previously\cite{bao2004activity}.
 \begin{equation}
 \label{eq:energyEq}
 E_s = {\sum_{m=0}^{k}{|a[m]|}^2}
@@ -355,7 +361,7 @@ The main reason for the decrease in the possible mapping is because when we are 
 In the previous section, we obtain a maximum spanning tree from $R$ and saw how this represents a spanning tree for the grid. In addition, we observe that there can be multiple spanning trees whose structure is similar to the MST. In this section, we describe a method to obtain all the possible spanning trees that have the same structure as the MST obtained from the correlation matrix of the sensors.
 The task of checking if a pattern graph $H$ is contained in a base graph $G$ and obtaining all the mappings from $G$ to $H$ is a standard problem of graph matching.
 
-A graph matching process between two graphs $G$ = $(V_G,E_G)$ and H = $(V_H,E_H)$ consists of determining a mapping M which associates nodes of the graph G to H and vice versa. Different constraints can be imposed onto M which results in different mapping types: monomorphism, isomorphism, graph-subgraph isomorphism are the most popular ones \cite{cordella1999performance}. Our problem falls under the category of graph monomorphism . 
+A graph matching process between two graphs $G$ = $(V_G,E_G)$ and H = $(V_H,E_H)$ consists of determining a mapping M which associates nodes of the graph $G$ to $H$ and vice versa. Different constraints can be imposed onto M which results in different mapping types: monomorphism, isomorphism, graph-subgraph isomorphism are the most popular ones \cite{cordella1999performance}. Our problem falls under the category of graph monomorphism . 
 
 Two graphs 
  $G =( V_G, E_G)$ and
@@ -385,7 +391,7 @@ The authors formulate the graph monomorphism problem as a minimum weight clique 
 The major drawback of the algorithm is that the algorithm uses a $N^2 \times N^2$ matrix to represent netgraph obtained from the cartesian product of the nodes of two graphs under investigation.
 N representing the number of nodes of the largest graph. This leads to large memory consumption, making the algorithm viable for only small graphs.
 A more recent algorithm for graph isomorphism, subgraph isomorphism, and monomorphism was proposed by \citeauthor{906251} in \cite{906251}, popular as VF algorithm. 
-The authors define a set of rules that are based on the sets of nodes connected to the ones that are already present in the partial mapping.
+The authors define a set of rules that are based on the sets of nodes connected to the ones that are already mapped.
 The authors further improved the algorithm in 2001 in their paper \cite{cordella2001improved}. 
 The authors proposed a modification to the algorithm and called it VF2.
 The authors introduce a method to restore data structure, which enabled them to reduce the memory consumption from $O(N^2)$ to $O(N)$ where $N$ is the number of nodes in the graph, thus enabling the algorithm to work with large graphs.
@@ -428,7 +434,7 @@ The VF2 algorithm is a graph matching algorithm to solve graph isomorphism, mono
 a base graph $G$ to a pattern graph $H$ consists of determining a mapping $M$ which associate nodes of the base graph $(G)$ with nodes of the pattern graph $(H)$ and vice versa, with some constraints.
 Mapping is expressed as a set of pairs of node $(u,v)$ with $u \in G$ and $v \in H$. 
 In VF2 algorithm the process of finding the mapping function is described by a  State Space Representation (SSR). Each state s of the matching process can be associated with a partial mapping solution $M(s)$,
-which contains only a subset of M. A transition from current state (s) to the next state (s') represents the addition of a mapping (u,v) to the state s.
+which contains only a subset of M. A transition from current state $(s)$ to the next state $(s')$ represents the addition of a mapping $(u,v)$ to the state $s$.
 
 VF2 algorithm introduces a set of rules which helps to prune the number of possible SSR that needs to be checked before obtaining a valid mapping. Figure \ref{fig:VF2} gives a high-level description of the VF2 algorithm.
 There are 3 important functionalities in the algorithm: 
@@ -443,7 +449,7 @@ There are 3 important functionalities in the algorithm:
 
 \subsection{Computation of candidate pair set $P(s)$}
 This section explains the method to compute the candidate pair set $P(S)$ for an undirected graph $G$ and $H$. 
-For every intermediate state s the algorithm computes $P(s)$, a set of possible mapping pairs. For each pair $p$ belonging to $P(s)$ the feasibility of its addition $F(s,u,v)$ is checked : if the check is successful the next state $s' = s \cup p$ and the whole process recursively applies to s'.
+For every intermediate state s the algorithm computes $P(s)$, a set of possible mapping pairs. For each pair $p$ belonging to $P(s)$ the feasibility of its addition $F(s,u,v)$ is checked : if the check is successful the next state $s' = s \cup p$ and the whole process recursively applies to $s'$.
 
 To compute $P(S)$ set $T_1(s)$ and $T_2(s)$ are defined for Graph $G$ and $H$ respectively. $T_1$ and $T_2$ are the set of  nodes in $G$ and $H$, which are neighbors of the set of nodes included in the partial mapping state $M(s)$ but are not included in $M(s)$.
 Set $P(s)$ will be made of all the node pairs $(u,v)$ with $u$ being a node in $T_1$ with the smallest label  and v being a node in $T_2$ . If  $T_1$ and $T_2$ sets are empty then the set $P(s)$ be calculated by using the sets of nodes not contained in either $G(s)$, $H(s)$.
@@ -451,7 +457,7 @@ Set $P(s)$ will be made of all the node pairs $(u,v)$ with $u$ being a node in $
 \subsection{Feasibility Rules}
 Feasibility Rules are used to check the consistency of the partial solution s' obtained by adding nodes n,m and prune the search tree. The functionality of the rules is as explained below.
 
-In the algorithm, those candidates $(u,v)$ are pruned if for every neighbor u' of u in the partial mapping, the corresponding node v' is a neighbor of v, and vice versa.
+In the algorithm, those candidates $(u,v)$ are pruned if for every neighbor $u'$ of $u$ in the partial mapping, the corresponding node $v'$ is a neighbor of $v$, and vice versa.
 
 The algorithm also compares the number of neighboring nodes of each u and v that are connected to nodes in $M(s)$ but are not
 included in $M(s)$. The number of such nodes in the base graph must be greater than or equal to the number of such nodes in the pattern graph.
