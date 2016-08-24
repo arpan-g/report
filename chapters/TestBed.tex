@@ -1,15 +1,10 @@
 \chapter{Test Bed}
 \label{chp:testbed}
-
-We setup our testbed in a $8m\times6m$ office space. Sensors are mounted on the ceiling which is at a height of 3m. The sensors are  placed 2.5m apart in the horizontal direction and 2.2m apart in the vertical direction. We use  PIR sensor, EKMB1101112 from Panasonic. 
+We setup our testbed in a $8m\times6m$ office space. Sensors are mounted on the ceiling which is at a height of 3m. The sensors are  placed 2.5m apart in the horizontal direction and 2.2m apart in the vertical direction.A schematic representation of the lab is as shown in the figure \ref{fig:roomLayout}. We use  PIR sensor, EKMB1101112 from Panasonic. 
 The output of the sensor is binary, with 1 indicating occupancy and 0 if the region is unoccupied.  We use the sensors with eZ430-RF2500 toolkit which consists of MSP430 micro-controller  and CC2500 multi-channel
-RF transceiver for wireless communication. The testbed uses simpliciTI a TI proprietary  low-power RF network protocol. To avoid collision CSMA/CA is employed. We mount the 8 sensors on the ceiling of the room as shown in the figure \ref{fig:photo} with the sensors highlighted in red. A schematic representation of the lab is as shown in the figure \ref{fig:roomLayout}. All the 8 nodes communicate directly to a centrally located access point which is connected to a laptop, which stores the data.
-To decrease the packet loss we enable acknowledgment. An acknowledgment (ack) is sent from the AP if the packets are received. If no ack is received by a node, the node retransmits its data a maximum of 6 times until an ack is  received from the AP. If no ack is received even after retransmission the packet is dropped and the node continues carrying on its function. From the figure \ref{fig:packetLoss} and table we can see that the there was a decrease in the packet loss per node after ack was enabled. 
-\begin{figure}[!ht]
-\includegraphics[scale=0.5]{./pics/lab_photo.jpg}
-\caption{Photo of the lab setup with the sensors highlighted in red}
-\label{fig:photo}
-\end{figure}
+RF transceiver for wireless communication. The testbed uses simpliciTI a TI proprietary  low-power RF network protocol.  We mount all the 8 sensors on the ceiling of the room as shown in the figure \ref{fig:photo}. 
+ All the 8 nodes communicate directly to a centrally located access point which is connected to a laptop, which stores the data.
+
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=0.5]{./pics/roomLayout.png}
@@ -17,9 +12,15 @@ To decrease the packet loss we enable acknowledgment. An acknowledgment (ack) is
 \label{fig:roomLayout}
 \end{figure}
 
-PIR sensors are sampled every 100ms. All the nodes have a local clock running on them. With 1 clock tick corresponding to 1ms. All the local clocks are synchronized to one global clock. Since the data is binary we combine 32 samples and transmit the packet every 3.2s. 
-Data packet is an array of 8 bit. The packet structure is as shown in the figure \ref{fig:packetStructure}\\
 
+\begin{figure}[!ht]
+\includegraphics[scale=0.5]{./pics/lab_photo.jpg}
+\caption{Photo of the lab setup with the sensors highlighted in red}
+\label{fig:photo}
+\end{figure}
+
+\section{Packet Loss}
+To avoid collision CSMA/CA is employed. Even though CSMA/CA is employed to avoid collision, during our initial tests we observed packet loss as high as 23\% for few nodes in our testbed as shown in the figure \ref{fig:ackDis} and table \ref{tab:packetLoss}. To decrease the packet loss we enable acknowledgment. An acknowledgment (ack) is sent from the AP if the packets are received. If no ack is received by a node, the node retransmits its data a maximum of 5 times until an ack is  received from the AP. If no ack is received even after 5 retransmission the packet is dropped and the next packet is prepared for transmission. From the figure \ref{fig:ackEnb} and table \ref{tab:packetLoss} we can see that the there was a decrease in the packet loss per node after ack was enabled. 
 
 \begin{figure}[!ht]
     \centering
@@ -27,14 +28,14 @@ Data packet is an array of 8 bit. The packet structure is as shown in the figure
         \centering
         \includegraphics[width=8cm,height=4cm]{./pics/packetLoss.png}
       \caption{Data before ack was enabled}
-       % \label{fig:y equals x}
+       \label{fig:ackDis}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{1\textwidth}
         \centering
         \includegraphics[width=8.5cm,height=4cm]{./pics/dataAfterAck.png}
         \caption{Data after ack was enabled}
-        %\label{fig:three sin x}
+        \label{fig:ackEnb}
     \end{subfigure}
 \caption{Data from the test bed. - 1 indicates the lost data , 1 indicates occupancy, 0 indicates unoccupied space}
 \label{fig:packetLoss}
@@ -58,6 +59,26 @@ Node & \begin{tabular}[c]{@{}c@{}}Packet loss Without \\ ack(\%)\end{tabular} & 
 \end{tabular}
 \end{table}
 
+
+\section{Time synchronization}
+In our testbeds each sensor node has a local clock running on it, with each clock tick corresponding to 1ms. Environment fluctuations, difference in battery levels or imperfection in clock construction can result in one of the clocks ticking faster than the other. To overcome this drift between the clocks we implement one-way synchronization \cite{kerkez2012adaptive}. In this method all the local clocks are synchronized to a centrally located node which has a clock running on it. This node transmits the packets periodically every one minute, containing the timestamp corresponding to the local time on the node. The sensor node upon receiving the packets set there local clock to the time specified in the received packet. 
+\begin{figure}[!ht]
+\includegraphics[scale=0.1]{./pics/timesync.jpg}
+\caption{Setup to test time synchronization}
+\label{fig:timeSync}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.5]{./pics/timeSyncErr}
+\caption{Worst case time synchronization error between two nodes}
+\label{fig:timeSyncErr}
+\end{figure}
+
+To test the time synchronization we place two sensor nodes opposite to each other as shown in the figure \ref{fig:timeSync}. We sample the sensor at 10ms. To limit the field of view of the sensors we cover the sensor with paper roll. We introduce an obstacle swiftly between the sensor for a short period. This process is repeated 10 times and the worst case time synchronization error is as shown in the figure \ref{fig:timeSyncErr}. As can be seen in the figure the worst case time synchronization error is approximately equal to 40ms, which is acceptable for our application.
+
+\section{Packet Structure}
+In our testbed we sample our occupancy sensors once every 100ms. Since the data is binary we combine 32 samples and transmit the packet every 3.2s. This decreases the traffic in sensor network.
+The transmitted packet is an array of one byte. Consisting of 14 bytes of payload. The payload structure is as shown in the figure \ref{fig:packetStructure}
 \begin{figure}[!ht]
  \bytefieldsetup{bitheight=3em}
 \begin{bytefield}[bitwidth=2.5em]{14}
@@ -69,7 +90,7 @@ Node & \begin{tabular}[c]{@{}c@{}}Packet loss Without \\ ack(\%)\end{tabular} & 
 \caption{Packet Structure}
 \label{fig:packetStructure}
 \end{figure}
-The transmitted packet is an array of 1 byte. Consisting of 14 bytes of payload. The payload structure is as shown in the figure \ref{fig:packetStructure}
+
 \begin{itemize}
 \item Mac Id - unique identifier for each node.
 \item Packet number- Keeps track of the packets that are being transmitted from a  node. It helps to identify the lost packets as well as repeated packets.
@@ -77,6 +98,6 @@ The transmitted packet is an array of 1 byte. Consisting of 14 bytes of payload.
 \item End time - 4 byte array corresponding to the time of  last sample of the PIR sensor in the packet.
 \item Data - 32 samples of the PIR sensor.
 \end{itemize}
-
+\section{Data Collection}
 Data was collected for a span of 2 months. During the course of the evaluation, the occupants were notified of data gathering, but were never instructed to behave in any particular way or was there any constrained applied on the activity or the number of people in the room. 
 

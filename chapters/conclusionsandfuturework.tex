@@ -2,7 +2,19 @@
 \label{chp:conclusionsandfuturework}
 
 \section{Conclusions}
-We present a new data driven method to identify the location of the sensors within a facility. We first identify a feature for the occupancy sensor data and calculate the correlation coefficient for the obtained feature data stream between the sensors. From the correlation values, we build correlation matrix ($R$)  which aids in identifying the neighboring sensor nodes. By computing the MST for $R$ we could identify at least one of the neighbors per sensor node. With the help of the coordinates of the vertices of the grid location, we model the grid as a graph and using the grid graph and the MST we reduce the problem of locating the sensors on the grid to a well-known problem of graph matching. We use the VF2 algorithm, a well known graph matching algorithm to map the sensor nodes to their locations on the grid. We validate the method developed with data from two different testbeds. We are able to identify the sensor locations with 0\% error for our experimental testbed and $4\times3$ sub-layout grid for Tokyo testbed. For the entire layout of the Tokyo testbed, we were able to identify the location of all the 43 sensors except 3.  
+
+We present a new data driven method to identify the location meta-data associated with the sensors within a facility. 
+We first identify a feature for the occupancy sensor data and calculate the correlation coefficient for the obtained feature data stream between the sensors.
+ From the correlation values, we build correlation matrix ($R$)  which aids in identifying the neighboring sensor nodes.
+By computing the MST for $R$ we could identify at least one of the neighbors per sensor node.
+With the help of the coordinates of the vertices of the grid location, we model the grid as a graph and using the grid graph and the MST we reduce the problem of locating the sensors on the grid to a well-known problem of graph matching.
+We use the VF2 algorithm, a well known graph matching algorithm to obtain various possible matching between the sensor and the grid.To identify the true arrangement out of these various mapping we define a quantity called \textit{Grid Correlation Sum (GCS)}.
+With the help of $GCS$ we are able to identify the true arrangement of the sensors up to rotational symmetry. 
+
+We validate the method developed with data from two different testbeds. We are able to identify the sensor locations with 0\% error for our experimental testbed and $4\times3$ sub-layout grid for Tokyo testbed.
+For the entire layout of the Tokyo testbed, we were able to identify the location of all the 43 sensors except 3.
+ During our investigation we find that the accuracy of the result depends on the available duration of the data.
+We find that the accuracy increases with the increase in the available duration of the data.
 
 
 \section{Future Work}
@@ -12,6 +24,6 @@ The results are encouraging, going forward we would like to address the followin
 \item Determine the effect of overlapping region on the performance of the algorithm: As could be seen while evaluating the performance of our results with the Tokyo testbed, we could notice that the length of data required to obtain accurate results varied. One of the main factors could be the extent of overlap between the sensors. In the future, we would like to investigate the effect of overlapping region on the performance of our algorithm.
 \item We are only able to identify the location of the sensors up to rotational symmetry. To overcome rotational symmetry and obtain the exact location of the sensors, extra information about the space is required. For our testbed, we can make use of the location of the door and observe the sensors which are triggered last before a large period of inactivity,this basically represents the last person leaving the room. The sensors which observe the last triggers can be placed on the side of the door and thus eliminating rotational symmetry in one direction. But this method cannot be generalized to all testbed. Therefore we would like to investigate methods which will be effective to eliminate the problem caused due to rotational symmetry.
 \item Apply our approach to work with other sensors: In our work, we determine the location of the sensors using the correlation matrix obtained from the occupancy sensor data.
-In the future, we would like to extend our method to other sensors. The modification that would have to be done to our approach would be to identify feature for the sensor data stream for which we can compute correlation values for the sensors. If we are able to obtain a correlation matrix such that the correlation values are high for neighboring sensors and low for non neighboring sensors, we could use our method to obtain the location of the sensors.
-\item We have developed this method under the assumption that the grid is a connected graph, i.e every sensor has at least one neighboring sensor. In practice, it may not be the case that the grid will always be a connected graph, therefore we would like to expand our method such that it will be able to locate the sensors even when the grid is not a connected graph.
+In the future, we would like to extend our method to other sensors. The modification that would have to be done to our approach would be to identify feature for the sensor data stream for which we can compute meaningful correlation values for the sensors.
+
 \end{itemize}
