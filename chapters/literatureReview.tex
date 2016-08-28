@@ -1,4 +1,5 @@
 \chapter{Literature Review}
+\label{chp:litReview}
 \section{Sensor Localization}
 There has been an extensive body of research that aims at obtaining the location information of the sensors in wireless sensor networks (WSN). All the approach that has been taken till now has been categorized by \citeauthor{wang2010survey} in \cite{wang2010survey} to fall into one of the following categories:
 \begin{itemize}
@@ -17,27 +18,26 @@ In the case of proximity based localization, the locations of the anchor nodes a
 
 \subsection{Data driven sensor localization}
 
-Data driven sensor localization has gained attention recently.The main advantage of this approach is that it does not require any special hardware, extra processing power on the nodes or extra information like RSSI to perform the localization.
-It makes use of the sensor data collected for the functioning of the applications, deploying the sensors. 
- As our work falls under the same category, we provide an overview of related works using the sensor data to determine the sensor location. The works in this are can be categorized into two categories: localization in commercial building and localization in smart homes.\\
-\textbf{\textit{Localization in Commercial Buildings}}:\par
-The works presented below consider sensor data obtained from commercial buildings.
+Data driven sensor localization has gained attention recently. The main advantage of this approach is that it does not require any special hardware, extra processing power on the nodes or extra information like RSSI to perform the localization.
+It makes use of the sensor data collected for the functioning of the applications deploying the sensors. 
+As our work falls under the same category, we provide an overview of related works using the sensor data to determine the sensor location. For convenience we categories the works in this area to the following categories:
+\subsubsection*{Sensor Localization in Commercial Buildings}
+The works presented below consider a system set up in commercial buildings.
  In \cite{Hong:2013:TAS:2528282.2528302}, \citeauthor{Hong:2013:TAS:2528282.2528302} 
  apply empirical mode decomposition (EMD) to 15 sensors in 5 rooms to cluster sensors which belong to the same room by analyzing the correlation coefficients of the intrinsic mode functions (IMF). They characterize the correlation coefficient distribution of sensors that are located in the
  same room and different rooms. They were able to show that there exists a correlation boundary analogous to the physical boundary which can be discovered empirically. 
 In \cite{doi:10.1061/9780784413616.226}, \citeauthor{doi:10.1061/9780784413616.226} propose a feature: energy content in HVAC delivered air, which can be derived from HVAC system sensors which could lead to the identification of the space in which the sensors are located . They combine sensor measurements and building characteristics(floor area) for the identification of the space in which the sensors are present.
 In \cite{Koc:2014:CLC:2674061.2674075}, \citeauthor{Koc:2014:CLC:2674061.2674075} propose a method to automatically identify the zone temperature and discharge temperature sensors that are closest to each other by using a statistical method on the collected raw data. They explore whether linear correlation or a statistical dependency measure(distance correlation) are better suited to infer the spatial relationship between the sensors. They carry out their analysis on three different testbeds. They also investigate the effects of distance between sensors and measurement periods on the matching results. In the end, the authors conclude that linear correlation coefficient provides better matching results compared to distance correlation. The authors also conclude that as the distance between the sensors increase, the data size needed to infer spatial relationships also increase.
-\\
-\textbf{\textit{Localization in Smart homes}}:\par
-The works presented below considers the sensor data obtained from smart homes. 
+\subsubsection*{Sensor Localization in Smart homes}
+The works presented below, consider a system set up in smart homes. 
 \citeauthor{Lu:2014:SBS:2648771.2629441} \cite{Lu:2014:SBS:2648771.2629441} describe a method to generate representative floor plans for a house. Their method clusters sensors to a room and assigns connectivity based on the simultaneous firing of the sensors placed on the door and window jambs. The algorithm gives a small set of possible maps from which the user has to choose the right map. Method requires special placement of the sensors to eliminate false clusters caused due to simultaneous occupancy of multiple rooms. The authors were able to calculate the floor map of 3 out of the 4 houses they evaluated.  
  \citeauthor{ellis2012creating} \cite{ellis2012creating} proposed an algorithm to compute the room connectivity using  PIR and light sensor data. They cluster the sensors present in the same room based  on observing the simultaneous triggering of the sensors. After clustering, they compute room connectivity based on, the artificial light spill over between rooms; occupancy detection due to movements between
   rooms; and fusion of the two. They calculate the transition matrix for the light sensor and occupancy sensor. Fuse both the data together to compute the connectivity graph. Here the authors have considered a situation where there are only one PIR and light sensor per room.
 \citeauthor{muller2014automated} \cite{muller2014automated} define  sensor topology as a graph with directed and weighted edges. All pairs of consecutive sensors triggers are interpreted as a user walking from the former to the latter sensing region indicated in the sensor 
-graph by an edge from the former to the latter. Every time a consecutive edge triggers are observed the weight of the edge between the sensors is incremented. They define a method to filter out erroneous edges.\\ \\
-\textbf{\textit{Localization by activity recognition:}}\par
-In \cite{marinakis2005learning}, \citeauthor{marinakis2005learning} obtain the sensor network topology using Monte Carlo Expectation Maximization. They assign activity to people present in the space to obtain the graph topology. The algorithm requires, the number of people present in the space as the input. They demonstrate the effectiveness of the algorithm using various simulated data.\\
-\textbf{\textit{Limitations}}\par
+graph by an edge from the former to the latter. Every time a consecutive edge triggers are observed the weight of the edge between the sensors is incremented. They define a method to filter out erroneous edges.
+\subsubsection*{Sensor Localization by activity recognition}
+In \cite{marinakis2005learning}, \citeauthor{marinakis2005learning} obtain the sensor network topology using Monte Carlo Expectation Maximization. They assign activity to people present in the space to obtain the graph topology. The algorithm requires, the number of people present in the space as the input. They demonstrate the effectiveness of the algorithm using various simulated data.
+\subsubsection*{Limitations}
 The methods presented in \cite{Hong:2013:TAS:2528282.2528302,doi:10.1061/9780784413616.226,Koc:2014:CLC:2674061.2674075,muller2014automated} look at only clustering the neighboring sensors together. They do not provide the information about where the sensors are located in the sensor grid. Works \cite{ellis2012creating,Lu:2014:SBS:2648771.2629441,muller2014automated} consider a smart home setting where sensors are sparsely located to locate the sensor positions. Method proposed in \cite{Lu:2014:SBS:2648771.2629441} requires special placement of sensors in the room to aid them in locating the sensors. In \cite{ellis2012creating}, the authors assume that there is only one sensor per room which makes it not applicable to systems which employ more than one sensors in a room. 
 
 The method we propose is able to locate the sensor on the grid. Our approach does not limit the number of sensors present with in a room nor does it require any special placement of sensors. The only condition that we apply is that a sensor should have an overlapping field of view with other sensors.
@@ -45,19 +45,18 @@ The method we propose is able to locate the sensor on the grid. Our approach doe
 
 \section{Meta-data inference}
 
-As explained in section \ref{sec:motivation} there has been significant interest in the field of automating the process of determining meta-data information of sensors. The works in this area can be classified in to two categories: inference from tags and inference from data
+As explained in section \ref{sec:motivation}, there is a need to automate the process of determining meta-data information of sensors. Due to which there has been significant interest shown to develop such methods. The works in this area can be classified in to two categories: inference from tags and inference from data
 \subsection{Inference from Tags}
-The meta-data in the systems are highly unstructured and inconsistent as different tags are added by different installers, for example, HVAC systems might be added by X, whereas lighting controls are added by Y. These installers tag the sensors and actuators based on their own conventions and convenience. Though there have been efforts to standardize the convention of naming the tags, no solutions have been widely accepted \cite{gao2015data}. Hence there have been methods developed to infer the meta-data from the tags.
+In general meta-data of the sensors are embedded in the tags that are given to the sensors. These tag names are highly unstructured and inconsistent as different tags are added by different installers. HVAC systems might be installed by a certain company, whereas lighting controls are installed by another company. These installers tag the sensors and actuators based on their own conventions and convenience. Though there has been significant efforts to standardize the convention of naming the tags, no solution has been widely accepted \cite{gao2015data}. Hence there have been methods developed to infer the meta-data automatically from these unstructured tags.
 
 In \cite{bhattacharya2014enabling}, \citeauthor{bhattacharya2014enabling} developed a technique to convert the tags of the sensors to a common and understandable name space. The method learns from a small number of example of the tags, which is provided by an expert, such as the building manager. From this representative examples, the method deciphers the rest of the tags of the sensors that are part of the system.
 In \cite{Schumann:2014:TAD:2674061.2674081}, \citeauthor{Schumann:2014:TAD:2674061.2674081} use the semantics of the textual labels of the sensor tags for semi-automating the process of inferring the meta data associated with sensors.
 \subsection{Inference from Data}
 Works \cite{Hong:2013:TAS:2528282.2528302,doi:10.1061/9780784413616.226,Koc:2014:CLC:2674061.2674075,Lu:2014:SBS:2648771.2629441,ellis2012creating,muller2014automated,marinakis2005learning} discussed previously fall under this category of inference of meta-data from the sensor measurements. These works provide the information about the location of the sensor within the facility. 
 Apart from the inference of location of the sensors, there have been few works which derive the information about the sensor type from the data. In \cite{calbimonte2012deriving}, \citeauthor{calbimonte2012deriving} observe the similarity in the slopes of the piece wise linear representation of the raw time-series measurements. Sensors which show similar slopes are categorized as of the same type. In \cite{gao2015data}, \citeauthor{gao2015data} extract statistical features from the data stream and train various classifiers to identify the sensor type.
-
 \section{Graph Matching}
 \label{sec:graphLitReview}
-We use graph matching technique in our work to determine the location of the sensor on the grid vertices. In this section, we present the related works in the area of graph matching.
+We use graph matching technique in our work to determine the location of the sensor on the grid vertices. Depending on the mapping type between the base graph and the pattern graph, graph matching can be categorized into different types. Our problem falls into the category of graph monomorphism. In this section, we present the related works in the area of graph matching in particular we look at works which solve graph monomorphism.
 
 Graph matching is widely used in pattern recognition and image processing applications. Graph matching also finds its application in the field of biomedical and biological applications. 
 Most of the algorithms that are developed for the purpose of graph matching employs tree search to iterate through all the nodes when an unfruitful match is encountered the algorithm backtracks.
@@ -78,24 +77,21 @@ The authors introduce a method to restore data structure, which enabled them to 
 
 \section{Summary}
 Table \ref{tab:litReview} summarizes the data driven localization techniques that have been discussed in this chapter.
-
-
-\begin{sidewaystable}[]
+\begin{table}[!ht]
 \centering
 \caption{Summary of data driven localization techniques}
 \label{tab:litReview}
-\begin{tabular}{|c|c|c|}
+\begin{tabularx}{\textwidth}{|X|X|X|}
 \hline
 Work                                                                               & Purpose                                                                                                     & Method                                                                                                                                                                                                                              \\ \hline
-\text{\citeauthor{Hong:2013:TAS:2528282.2528302}}\text{\cite{Hong:2013:TAS:2528282.2528302}} & co-locating sensors                                                                                         & \begin{tabular}[c]{@{}c@{}}Correlation coefficient between the IMF of\\ the sensor data\end{tabular}                                                                                                                                \\ \hline
-\text{\citeauthor{doi:10.1061/9780784413616.226}}\text{\cite{doi:10.1061/9780784413616.226}} & co-locating sensors                                                                                         & \begin{tabular}[c]{@{}c@{}}Correlation coefficient between the energy\\ content of the HVAC delivered air\end{tabular}                                                                                                              \\ \hline
-\text{\citeauthor{Koc:2014:CLC:2674061.2674075}}\text{\cite{Koc:2014:CLC:2674061.2674075}}      & co-locating sensors                                                                                         & Correlation between the raw sensor data.                                                                                                                                                                                            \\ \hline
-\text{\citeauthor{Lu:2014:SBS:2648771.2629441}}\text{\cite{Lu:2014:SBS:2648771.2629441}}      & floor maps for a house                                                                                      & \begin{tabular}[c]{@{}c@{}}clustering based on simultaneous trigger of occupancy sensors and \\connectivity between rooms is determined by \\ simultaneous triggering of sensors placed on window jamb and door.\end{tabular} \\ \hline
-\text{\citeauthor{ellis2012creating}}\text{\cite{ellis2012creating}}                         & room connectivity graph                                                                                     & Transition matrix between the sensors located in different rooms.                                                                                                                                                                   \\ \hline
-\text{\citeauthor{muller2014automated}}\text{\cite{muller2014automated}}                     & co-locating sensors                                                                                         & Consecutive edge triggers                                                                                                                                                                                                           \\ \hline
-\text{\citeauthor{marinakis2005learning}}\text{\cite{marinakis2005learning}}                  & \begin{tabular}[c]{@{}c@{}}inferring sensor network topology\\ by assigning activity to users.\end{tabular} & \multicolumn{1}{l|}{Assigning activity to people to obtain the sensor topology}                                                                                                                                                     \\ \hline
-\end{tabular}
-\end{sidewaystable}
-
+\centering\text{\citeauthor{Hong:2013:TAS:2528282.2528302}}\text{\cite{Hong:2013:TAS:2528282.2528302}} & co-locating sensors                                                                                         & Correlation coefficient between the IMF of the sensor data \\ \hline
+\centering\text{\citeauthor{doi:10.1061/9780784413616.226}}\text{\cite{doi:10.1061/9780784413616.226}} & co-locating sensors                                                                                         & Correlation coefficient between the energy content of the HVAC delivered air \\ \hline
+\centering\text{\citeauthor{Koc:2014:CLC:2674061.2674075}}\text{\cite{Koc:2014:CLC:2674061.2674075}}      & co-locating sensors                                                                                         & Correlation between the raw sensor data.                                                                                                                                                                                            \\ \hline
+\centering\text{\citeauthor{Lu:2014:SBS:2648771.2629441}}\text{\cite{Lu:2014:SBS:2648771.2629441}}      & floor maps for a house                                                                                      & Clustering based on simultaneous trigger of occupancy sensors. Connectivity between rooms is determined by  simultaneous triggering of sensors placed on window jamb and door. \\ \hline
+\centering\text{\citeauthor{ellis2012creating}}\text{\cite{ellis2012creating}}                         & room connectivity graph                                                                                     & Transition matrix between the sensors located in different rooms.                                                                                                                                                                   \\ \hline
+\centering\text{\citeauthor{muller2014automated}}\text{\cite{muller2014automated}}                     & co-locating sensors                                                                                         & Consecutive edge triggers                                                                                                                                                                                                           \\ \hline
+\centering\text{\citeauthor{marinakis2005learning}}\text{\cite{marinakis2005learning}}                  & inferring sensor network topology by assigning activity to users. &Assigning activity to people to obtain the sensor topology                                                                                                                                            \\ \hline
+\end{tabularx}
+\end{table}
 
 

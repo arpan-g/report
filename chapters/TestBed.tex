@@ -1,9 +1,9 @@
 \chapter{Test Bed}
 \label{chp:testbed}
-We setup our testbed in a $8m\times6m$ office space. Sensors are mounted on the ceiling which is at a height of 3m. The sensors are  placed 2.5m apart in the horizontal direction and 2.2m apart in the vertical direction.A schematic representation of the lab is as shown in the figure \ref{fig:roomLayout}. We use  PIR sensor, EKMB1101112 from Panasonic. 
+We setup our testbed in an $8m\times6m$ office space. Sensors are mounted on the ceiling which is at a height of 3m. The sensors are  placed 2.5m apart in the horizontal direction and 2.2m apart in the vertical direction. A schematic representation of the lab is as shown in the figure \ref{fig:roomLayout} with the positions of the sensors marked. We use  PIR sensor, EKMB1101112 from Panasonic. 
 The output of the sensor is binary, with 1 indicating occupancy and 0 if the region is unoccupied.  We use the sensors with eZ430-RF2500 toolkit which consists of MSP430 micro-controller  and CC2500 multi-channel
 RF transceiver for wireless communication. The testbed uses simpliciTI a TI proprietary  low-power RF network protocol.  We mount all the 8 sensors on the ceiling of the room as shown in the figure \ref{fig:photo}. 
- All the 8 nodes communicate directly to a centrally located access point which is connected to a laptop, which stores the data.
+All the 8 nodes communicate directly to a centrally located access point which is connected to a laptop, which stores the data.
 
 \begin{figure}[!ht]
 \centering
@@ -20,7 +20,7 @@ RF transceiver for wireless communication. The testbed uses simpliciTI a TI prop
 \end{figure}
 
 \section{Packet Loss}
-To avoid collision CSMA/CA is employed. Even though CSMA/CA is employed to avoid collision, during our initial tests we observed packet loss as high as 23\% for few nodes in our testbed as shown in the figure \ref{fig:ackDis} and table \ref{tab:packetLoss}. To decrease the packet loss we enable acknowledgment. An acknowledgment (ack) is sent from the AP if the packets are received. If no ack is received by a node, the node retransmits its data a maximum of 5 times until an ack is  received from the AP. If no ack is received even after 5 retransmission the packet is dropped and the next packet is prepared for transmission. From the figure \ref{fig:ackEnb} and table \ref{tab:packetLoss} we can see that the there was a decrease in the packet loss per node after ack was enabled. 
+To avoid collision between the transmitted packets CSMA/CA is employed in our testbed. Even though CSMA/CA is employed, during our initial tests we observed packet loss as high as 23\% for few nodes as shown in the figure \ref{fig:ackDis} and table \ref{tab:packetLoss}. To decrease the packet loss we enable acknowledgment. An acknowledgment (ack) is sent from the AP if the packets are received. If no ack is received by a node, the node retransmits its data a maximum of 5 times until an ack is  received from the AP. If no ack is received even after 5 retransmission the packet is dropped and the next packet is prepared for transmission. From the figure \ref{fig:ackEnb} and table \ref{tab:packetLoss} we can see that the there was a decrease in the packet loss per node after ack was enabled. 
 
 \begin{figure}[!ht]
     \centering
@@ -61,7 +61,7 @@ Node & \begin{tabular}[c]{@{}c@{}}Packet loss Without \\ ack(\%)\end{tabular} & 
 
 
 \section{Time synchronization}
-In our testbeds each sensor node has a local clock running on it, with each clock tick corresponding to 1ms. Environment fluctuations, difference in battery levels or imperfection in clock construction can result in one of the clocks ticking faster than the other. To overcome this drift between the clocks we implement one-way synchronization \cite{kerkez2012adaptive}. In this method all the local clocks are synchronized to a centrally located node which has a clock running on it. This node transmits the packets periodically every one minute, containing the timestamp corresponding to the local time on the node. The sensor node upon receiving the packets set there local clock to the time specified in the received packet. 
+In our testbed, each sensor node has a local clock running on it, with each clock tick corresponding to 1ms. Environment fluctuations, difference in battery levels or imperfection in clock construction can result in one of the clocks ticking faster than the other. To overcome this drift between the clocks we implement one-way synchronization as explained in \cite{kerkez2012adaptive}. In this method, all the local clocks are synchronized to a centrally located node which has a clock running on it. This node transmits the packets periodically after every minute, containing the timestamp corresponding to the local time on the node. The sensor node upon receiving the packets set their local clock to the time specified in the received packet. 
 \begin{figure}[!ht]
 \includegraphics[scale=0.1]{./pics/timesync.jpg}
 \caption{Setup to test time synchronization}
@@ -74,10 +74,10 @@ In our testbeds each sensor node has a local clock running on it, with each cloc
 \label{fig:timeSyncErr}
 \end{figure}
 
-To test the time synchronization we place two sensor nodes opposite to each other as shown in the figure \ref{fig:timeSync}. We sample the sensor at 10ms. To limit the field of view of the sensors we cover the sensor with paper roll. We introduce an obstacle swiftly between the sensor for a short period. This process is repeated 10 times and the worst case time synchronization error is as shown in the figure \ref{fig:timeSyncErr}. As can be seen in the figure the worst case time synchronization error is approximately equal to 40ms, which is acceptable for our application.
+To test the time synchronization we place two sensor nodes opposite to each other as shown in the figure \ref{fig:timeSync}. We sample the sensors at 10ms. To limit the field of view of the sensors we cover the sensor with paper roll. We introduce an obstacle swiftly between the sensor for a short period. This process is repeated 10 times and the worst case time synchronization error is as shown in the figure \ref{fig:timeSyncErr}. As can be seen in the figure the worst case time synchronization error is approximately equal to 40ms, which is acceptable for our application.
 
 \section{Packet Structure}
-In our testbed we sample our occupancy sensors once every 100ms. Since the data is binary we combine 32 samples and transmit the packet every 3.2s. This decreases the traffic in sensor network.
+In our testbed, we sample our occupancy sensors once every 100ms. Since the data is binary we combine 32 samples and transmit the packet every 3.2s. This decreases the traffic in the sensor network.
 The transmitted packet is an array of one byte. Consisting of 14 bytes of payload. The payload structure is as shown in the figure \ref{fig:packetStructure}
 \begin{figure}[!ht]
  \bytefieldsetup{bitheight=3em}
@@ -95,7 +95,7 @@ The transmitted packet is an array of one byte. Consisting of 14 bytes of payloa
 \item Mac Id - unique identifier for each node.
 \item Packet number- Keeps track of the packets that are being transmitted from a  node. It helps to identify the lost packets as well as repeated packets.
 \item Start time - 4 byte array corresponding to the time of first PIR sample of the PIR sensor in the packet.
-\item End time - 4 byte array corresponding to the time of  last sample of the PIR sensor in the packet.
+\item End time - 4 byte array corresponding to the time of  the last sample of the PIR sensor in the packet.
 \item Data - 32 samples of the PIR sensor.
 \end{itemize}
 \section{Data Collection}

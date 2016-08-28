@@ -1,7 +1,8 @@
 \chapter{Methodology}
+\label{chp:method}
 
-This chapter explains the method developed to locate the occupancy sensors in a ceiling mounted sensor grid, using the information about the locations of the vertices of the grid and data obtained from the sensors.
-Consider a sensor grid as shown in the figure \ref{fig:Grid}, consisting of n nodes. There are $N= n!$ ways in which the sensors can be uniquely placed on the grid. 
+This chapter explains the method developed to locate the occupancy sensors in a ceiling mounted sensor grid, using the  data obtained from the sensors and  information about the locations of the vertices of the grid.
+Consider a sensor grid as shown in the figure \ref{fig:Grid}, consisting of n nodes. There are $N= n!$ ways in which these sensors can be uniquely placed on the grid. 
 Out of these N ways we have to identify the actual locations of the sensors in the grid.
 \begin{figure}[!ht]
 \begin{tikzpicture}
@@ -63,7 +64,7 @@ GAM_{i,j} =
 0, & \text{otherwise}\\
 \end{cases}
     \]
-$d_{i,j}$  is the euclidean distance between the vertex i($x_i$,$y_i$) and j($x_j$,$y_j$).
+$d_{i,j}$  is the euclidean distance between the vertex $ i(x_i,y_i)$ and $j(x_j,y_j)$.
 \begin{equation*}
 d_{i,j}=\sqrt{(x_i-x_j)^2 + (y_i-y_j)^2}
 \end{equation*}
@@ -121,8 +122,7 @@ $\phi$ is a mapping functions which gives the sensor located at vertex i.\\
 $ R(\phi(i),\phi(j))$: correlation coefficient between the sensors placed on vertex $i$ and $j$.\\
 $GAM$:  Adjacency matrix of the grid as per definition \ref{def:GAM}.\\
 
-We use $GCS$ to identify the correct arrangement out of all the $N$ possible arrangements. If we compute  $GCS$ for all the possible arrangements, the arrangement with the maximum $GCS$ will represent the actual arrangement of the sensors on the grid.  
-If two non-neighboring sensors are kept on neighboring vertices or vice versa then the correlation value between those two sensors will be low and thus decreasing the $GCS$.
+We use $GCS$ to identify the correct arrangement out of all the $N$ possible arrangements. We hypothesize that if we compute  $GCS$ for all the possible arrangements, the arrangement with the maximum $GCS$ will represent the actual arrangement of the sensors on the grid. The reasoning behind the hypothesis is that, if two non-neighboring sensors are kept on neighboring vertices or vice versa then the correlation value between those two sensors will be low and thus decreasing the $GCS$.
 To illustrate this consider a sensor grid as shown in the figure \ref{fig:arrangement1}.
  It consists of 3 $\times$ 3 grid.  
 $GCS$ for the  the grid is :\\
@@ -181,7 +181,7 @@ GCS_{2}=\text{ r(1,2)+r(1,4)+...+\textbf{r(2,6)}+...+\textbf{r(3,5)+r(3,9)}...+r
 \end{floatrow}
 \end{figure}
 
-$GCS_{1}$ will be greater than $GCS_{2}$ as $r(2,3)>r(2,6)$ , $r(5,6) > r(3,5)$ and $ r(6,9) > r(3,9)$ as sensors 2 and 6 , 3 and 5, 3 and 9 are non-neighboring sensor nodes placed on neighboring vertices. Hence we can say that $GCS$ will be maximum for a  mapping which maps sensors onto the grid accurately.\\
+$GCS_{1}$ will be greater than $GCS_{2}$ as $r(2,3)>r(2,6)$ , $r(5,6) > r(3,5)$ and $ r(6,9) > r(3,9)$ as sensor pair (2,6) , (3,5) and (3,9) are non-neighboring sensor nodes placed on neighboring vertices. Hence we can say that $GCS$ will be maximum for a  mapping which maps sensors onto the grid accurately.\\
 With this condition, a straight forward way to determine the sensor location will be to carry out a brute force search where $GCS$ is computed for all the $N$ possible arrangements. The brute force search can be carried out only when the number of sensors is low, as the number of sensors increases the number of possible mappings also increase drastically, which makes it impossible to carry out a brute force search. Hence there is a need to reduce the search space.
 
 
@@ -203,7 +203,7 @@ To identify neighboring sensors, we build a graph $G(V,E,W)$ such that $V = \{S_
 
 To compute MST we make use of Prim's algorithm\cite{BLTJ:BLTJ1515}.  Prim's algorithm is originally used to compute the minimum spanning tree. To compute the maximum spanning tree the weights of the graph $G$ are negated and with these weights, minimum spanning tree is computed using Prim's algorithm. The minimum spanning tree thus obtained represents the maximum spanning tree for the original graph $G$.
 
-As the sensors are placed on the grid and there exists an edge between the neighboring vertices of the grid. The MST over ${R}$ represents one of the spanning trees for the grid. As illustrated in the figure \ref{fig:MST}.
+As per the definition of $G(V,E,W)$ there is an edge between the neighboring vertices of the grid. The MST as we discussed above is formed by connecting neighboring sensors. Thus we can infer that the $MST$ over $R$ represents a spanning tree for the graph $G$. 
 
 \begin{figure}[!ht]
 \begin{tikzpicture}[scale=0.6,darkstyle/.style={circle,draw,fill=gray!40,minimum size=5,transform shape}]
@@ -278,7 +278,7 @@ Figure \ref{fig:variousMappings} shows few of the spanning tree of the grid simi
 \end{figure}
 
 
-If we compute all the possible spanning trees for the grid which maintains the same structure as that of the maximum spanning tree for the correlation matrix and map each vertex on the MST to the corresponding spanning tree of the grid as shown in the figure \ref{fig:mapping}, we obtain several possible mappings of the sensors to grid location. Among the possible mappings, we have to choose the correct arrangement. To choose the true arrangement of the sensor on the grid we make use of  $GCS$. 
+If we compute all the possible spanning trees for the grid which maintains the same structure as that of the $MST$ for the correlation matrix and map each vertex on the MST to the corresponding spanning tree of the grid as shown in the figure \ref{fig:mapping}, we obtain several possible mappings of the sensors to grid location. Among the possible mappings, we have to choose the correct arrangement. To choose the true arrangement of the sensor on the grid we make use of  $GCS$. 
 The number of arrangements that are obtained from this method is lesser than the ${N}$  possible arrangements that had to be evaluated for brute force technique.
 
 %The main reason for the decrease in the possible mapping is because when we are computing various mappings between the sensors maximum spanning tree and spanning tree for the grid, adjacency has to be maintained. Which implies that when sensor $S_1$ gets assigned to grid vertex $G_1$, while assigning sensor $S_2$ which is a neighbor of $S_1$ to the grid vertices, care has to be taken that the assigned grid node has to be a neighbor of the vertex $G_1$.
