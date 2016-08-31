@@ -5,7 +5,7 @@
 \includegraphics[width=5.5cm]{./pics/angle.png}
 \label{fig:height}
 \end{wrapfigure}
-The coordinates of the vertices are as given in the table \ref{tab:htc34xy}. We use EKMB1101112 PIR sensors from Panasonic, with detection angle of $82^\circ$.
+The coordinates of the vertices are as given in the Table \ref{tab:htc34xy}. We use EKMB1101112 PIR sensors from Panasonic, with detection angle of $82^\circ$.
 PIR nodes are placed on the ceiling which is at a height of 3m. From this information we can compute the radius of the field of view of the PIR sensors as follows:\\\\
 $h=3m, a = 82^{\circ}$\\
 $r=h\cdot tan(\frac{a}{2})$\\
@@ -52,7 +52,7 @@ vertices & 1    & 2    & 3    & 4    & 5    & 6    & 7    & 8    \\ \hline
 \end{tabular}
 \end{table}
 
-The distances between all the sensor nodes are represented in a matrix form and is as given in the table \ref{tab:dist} . The radius of the PIR sensor is 2.6m thus any 2 sensors located less than 5.2m(2r) apart are considered neighboring sensors. The adjacecy matrix is obtained as shown in the table \ref{tab:am}
+The distances between all the sensor nodes are represented in a matrix form and is as given in the Table \ref{tab:dist} . The radius of the PIR sensor is 2.6m thus any 2 sensors located less than 5.2m(2r) apart are considered neighboring sensors. The adjacecy matrix is obtained as shown in the Table \ref{tab:am}
 
 \begin{table}[]
 \centering
@@ -75,7 +75,7 @@ vertices & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
 \chapter{Tokyo Testbed}
 \label{app:B}
 
-The coordinates of the vertices in Tokyo testbed are not explicitly specified. The information available are the room layout map as shown in figure \ref{fig:casas}, pir sensor field of view given as $1.2m \times 1.2m$ and the average distance between the sensors as 1.2m in \cite{crandall2011tracking}. Assuming that the given layout is to scale and the distance between sensors 27 and 22 as 1.2m, the coordinates of all the sensors are computed. We start by placing the origin(0,0) at vertex 30 and measure the distance of every vertex from the x and y axis which gives the coordinates of all vertices on the grid. The coordinates thus obtained are as shown in the table \ref{tab:wsuxy}. No triggers was found for sensor 38 in the dataset, hence sensor 38 is not considered.
+The coordinates of the vertices in Tokyo testbed are not explicitly specified. The information available are the room layout map as shown in Figure \ref{fig:casas}, pir sensor field of view given as $1.2m \times 1.2m$ and the average distance between the sensors as 1.2m in \cite{crandall2011tracking}. Assuming that the given layout is to scale and the distance between sensors 27 and 22 as 1.2m, the coordinates of all the sensors are computed. We start by placing the origin(0,0) at vertex 30 and measure the distance of every vertex from the x and y axis which gives the coordinates of all vertices on the grid. The coordinates thus obtained are as shown in the Table \ref{tab:wsuxy}. No triggers was found for sensor 38 in the dataset, hence sensor 38 is not considered.
 
 Adjacency between two vertices is determined if the square of dimension $1.2 \times 1.2$ drawn around the vertices have any overlap. If there is any overlap then the vertices are considered neighbors.
 
