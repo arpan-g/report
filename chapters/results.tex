@@ -224,10 +224,10 @@ dataset & \begin{tabular}[c]{@{}c@{}}Number of\\ states visited\end{tabular} & M
 %-------------------------------------------------------------WSU TOKYO TESTBED-----------------------------------------------------------------------------------------------------------------------------------%
 
 \section{WSU Tokyo testbed}
-To further validate the effectiveness of our method, we use the data from WSU smart workplace testbed\cite{cook2010detection}, a publicly available data set. The testbed called Tokyo is located in a lab,  where students perform their normal work routine. Data was collected over a period of 4 months. 
+To further validate the effectiveness of our method, we use the data from WSU smart workplace testbed\cite{cook2010detection}, a publicly available data set. The testbed called Tokyo is located in a lab, where students perform their normal work routine. Data was collected over a period of 4 months. 
 The testbed consists of 43\footnote{Sensor 38 has been ignored as no triggers were found for it throughout the dataset} motion sensors, placed as shown in the Figure \ref{fig:casas}. The sensors field of view is $1.2m \times 1.2m$. In appendix \ref{app:B} we provide a detailed explanation about how we obtain the co-ordinates and the grid adjacency matrix for the testbed. The data from the WSU testbed is represented in the form of a four-tuple as shown in Table \ref{tab:WSUDATA}. 
 \subsection{Pre processing}
-The plot of the dataset for a period of 12hrs is as shown in the Figure \ref{fig:heatMap}. As can be inferred from the Figure the dataset mainly consists of parts which are largely inactive. There should be a certain amount of activity happening in the space to observe correlation values between the sensors.  Also if  no activity is observed in the space it will result in all the sensors having the same values(0) and unfairly influencing the correlation values between the sensors, as correlation value is a measure of similarity between two datasets. For these reasons we filter out the parts of the data where we do not observe any trigger for a sensor for a time period of more than 3hrs. The resulting data is sampled at 100ms and is used to verify our method to find the location of the sensors.
+The plot of the dataset for a period of 12hrs is as shown in the Figure \ref{fig:heatMap}. As can be inferred from the Figure the dataset mainly consists of parts which are largely inactive. There should be a certain amount of activity happening in the space to observe correlation values between the sensors. Also if no activity is observed in the space it will result in all the sensors having the same values(0) and unfairly influencing the correlation values between the sensors, as correlation value is a measure of similarity between two datasets. For these reasons we filter out the parts of the data where we do not observe any trigger for a sensor for a time period of more than 3hrs. The resulting data is sampled at 100ms and is used to verify our method to find the location of the sensors.
 
 
 
@@ -269,7 +269,7 @@ Date       & Time            & sensor & state \\ \hline
 
 
 \subsection{Sub layout}
-Before we use the complete layout of the grid, we carry out our analysis on a $4 \times 3$ sub-layout which includes sensors 27, 22, 15, 28, 23, 16, 29, 24, 17, 30, 25, 18. This grid was chosen as it is mentioned in \cite{cook2010detection} that the region covered by these sensors is more active compared to other regions in the testbed. After processing, the data reduces to a span of 207hrs. 
+Before we use the complete layout of the grid, we carry out our analysis on a $4 \times 3$ sub-layout which includes sensors 27, 22, 15, 28, 23, 16, 29, 24, 17, 30, 25, 18. This grid was chosen as it is mentioned in \cite{cook2010detection} that the region covered by these sensors is more active compared to other regions in the testbed. After processing, the data reduces to a span of 207hrs. We continue to use the window length of 36 as we observe no error for window length varying from 10 to 64.
 
 
 \subsection{Data Length}

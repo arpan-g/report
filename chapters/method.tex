@@ -73,6 +73,7 @@ d_{i,j}=\sqrt{(x_i-x_j)^2 + (y_i-y_j)^2}
 From the definitions \ref{def:ns} and \ref{def:GAM}, we can say that sensors placed on neighboring vertices will be neighboring nodes and vise versa. As can be seen in the Figure \ref{fig:Grid} there will be an overlap in the field of view between two sensors if the distance $(d)$ between them is less than $2r$.
 
 \section{Feature}
+\label{sec:energy}
 As it has been shown previously in \cite{Hong:2013:TAS:2528282.2528302,doi:10.1061/9780784413616.226,Koc:2014:CLC:2674061.2674075}, that the neighboring sensors can be identified by computing the correlation values for the sensors raw data or a feature extracted from the raw sensor data. We commence our method similarly by identifying a feature which will aid us to do the same. As neighboring sensors have an overlapping field of view, they observe the same events and thus are highly correlated. On the raw signals of the PIR data stream we use a sliding window with $50\%$ overlap between the consecutive windows and compute the energy feature using the equation \ref{eq:energyEq}. 50\% overlapping window has been chosen as it has been shown to be effective for feature extraction previously\cite{bao2004activity}. We determine the window length empirically.
 \begin{equation}
 \label{eq:energyEq}
@@ -95,7 +96,7 @@ $\overline{X}$ and $\overline{Y}$ is the mean value of $X$ and $Y$ respectively.
 
 \section{Grid Correlation Sum}
 \label{sec:gcs}
-Using the cross correlation values between the sensors, we define correlation matrix $R$ between the $n$ sensor nodes as shown in the equation \ref{eq:corrMatrix} . The matrix $R$ is constructed such that $R(i,j)$ corresponds to the correlation value between the sensors $i$ and $j$.
+Using the cross correlation values between the sensors, we define correlation matrix $R$ between the $n$ sensor nodes as shown in the equation \ref{eq:corrMatrix}. The matrix $R$ is constructed such that $R(i,j)$ corresponds to the correlation value between the sensors $i$ and $j$.
 \begin{equation}
 \label{eq:corrMatrix}
 \centering
@@ -279,7 +280,7 @@ Figure \ref{fig:variousMappings} shows few of the spanning tree of the grid simi
 \end{figure}
 
 
-If we compute all the possible spanning trees for the grid which maintains the same structure as that of the $MST$ for the correlation matrix and map each vertex on the MST to the corresponding spanning tree of the grid as shown in the Figure \ref{fig:mapping}, we obtain several possible mappings of the sensors to grid location. Among the possible mappings, we have to choose the correct arrangement. To choose the true arrangement of the sensor on the grid we make use of  $GCS$. 
+If we compute all the possible spanning trees for the grid which maintains the same structure as that of the $MST$ for the correlation matrix and map each vertex on the MST to the corresponding spanning tree of the grid as shown in the Figure \ref{fig:mapping}, we obtain several possible mappings of the sensors to grid location. Among the possible mappings, we have to choose the correct arrangement. To choose the true arrangement of the sensor on the grid we make use of $GCS$. 
 The number of arrangements that are obtained from this method is lesser than the ${N}$  possible arrangements that had to be evaluated for brute force technique.
 
 %The main reason for the decrease in the possible mapping is because when we are computing various mappings between the sensors maximum spanning tree and spanning tree for the grid, adjacency has to be maintained. Which implies that when sensor $S_1$ gets assigned to grid vertex $G_1$, while assigning sensor $S_2$ which is a neighbor of $S_1$ to the grid vertices, care has to be taken that the assigned grid node has to be a neighbor of the vertex $G_1$.
@@ -374,7 +375,7 @@ The number of arrangements that are obtained from this method is lesser than the
 In the previous section, we obtain a maximum spanning tree from $R$ and saw how this represents a spanning tree for the grid. In addition, we observe that there can be multiple spanning trees whose structure is similar to the $MST$. In this section, we describe a method to obtain all the possible spanning trees that have the same structure as the MST obtained from the correlation matrix of the sensors.
 The task of checking if a pattern graph $H$ is contained in a base graph $G$ and obtaining all the mappings from $G$ to $H$ is a standard problem of graph matching.
 
-A graph matching process between two graphs $G$ = $(V_G,E_G)$ and H = $(V_H,E_H)$ consists of determining a mapping M which associates nodes of the graph $G$ to $H$ and vice versa. Different constraints can be imposed onto M which results in different mapping types: monomorphism, isomorphism, graph-subgraph isomorphism are the most popular ones \cite{cordella1999performance}. Our problem falls under the category of graph monomorphism . 
+A graph matching process between two graphs $G$ = $(V_G,E_G)$ and H = $(V_H,E_H)$ consists of determining a mapping M which associates nodes of the graph $G$ to $H$ and vice versa. Different constraints can be imposed onto M which results in different mapping types: monomorphism, isomorphism, graph-subgraph isomorphism are the most popular ones \cite{cordella1999performance}. Our problem falls under the category of graph monomorphism. 
 
 Two graphs 
  $G =( V_G, E_G)$ and
@@ -389,7 +390,7 @@ mapping $\phi( V_G) \rightarrow  V_H$ : for which $\forall \text{ v,w} \in V_G:(
 
 The relationship between edges of the graphs are equivalence for subgraph isomorphism, and for Monomorphism  relationship  is an implication.
 
-A problem of finding all the Monomorphisms of the pattern graph into the base graph is defined as Monomorphism problem. Graph Monomorphism is an NP-Complete problem \cite{Garey:1979:CIG:578533}.  In section \ref{sec:graphLitReview} we present related works in the field of graph matching.In our work, we use the VF2 algorithm to obtain the mappings between the spanning tree and grid graph.
+A problem of finding all the Monomorphisms of the pattern graph into the base graph is defined as Monomorphism problem. Graph Monomorphism is an NP-Complete problem \cite{Garey:1979:CIG:578533}.  In section \ref{sec:graphLitReview}, we present related works in the field of graph matching. In our work, we use the VF2 algorithm to obtain the mappings between the spanning tree and grid graph.
 
 \subsection{VF2}
 
@@ -430,12 +431,11 @@ Mapping is expressed as a set of pairs of node $(u,v)$ with $u \in G$ and $v \in
 In VF2 algorithm the process of finding the mapping function is described by a  State Space Representation (SSR). Each state s of the matching process can be associated with a partial mapping solution $M(s)$,
 which contains only a subset of $M$. A transition from current state $(s)$ to the next state $(s')$ represents the addition of a mapping $(u,v)$ to the state $s$.
 
-VF2 algorithm introduces a set of rules which helps to prune the number of possible SSR that needs to be checked before obtaining a valid mapping. Figure \ref{fig:VF2} gives a high-level description of the VF2 algorithm.
-There are 3 important functionalities in the algorithm: 
+VF2 algorithm introduces a set of rules which helps to prune the number of possible SSR that needs to be checked before obtaining a valid mapping. Figure \ref{fig:VF2} gives a high-level description of the VF2 algorithm. There are 3 important functionalities in the algorithm: 
 \begin{itemize}
-\item generation of possible mappings $(P(s))$ .
-\item checking of the validity of the mapping $(F(s,u,v))$.
-\item Restore data structure.
+\item generation of possible mappings $(P(s))$
+\item checking of the validity of the mapping $(F(s,u,v))$
+\item Restore data structure
 \end{itemize}
 
 
@@ -460,7 +460,7 @@ Finally, the number of neighboring nodes of each of $u$ and $v$ that are not dir
 such nodes in the base graph must be greater than or equal to the number of such nodes in the pattern graph.
 
 \subsection{Restore data structure}
-In VF2 algorithm all the vectors that are used to store data have the following property: If an element is assigned a value in a state $s$, it will remain assigned in all states descending from $s$. This property, together with the depth-first strategy of the search is used to avoid the need to store a different copy of the vectors for each state. When the algorithm backtracks, it restores the previous value of the vectors. This was the improvement introduced in the VF2 algorithm. This is illustrated in the Figure \ref{fig:memManagement}.Consider every block to hold the mappings between the base graph and the pattern graph. As can be seen from the figure as one goes down in the tree, a new variable is created for every level, but with restore data structure the same variable is used at every level. When the algorithm has finished traversing all the levels of the search tree, the algorithm without restore data structure will have $N$ variables, whereas one with restore data structure will have only one variable created. Thus reducing the space complexity of the VF2 algorithm to $O(N)$ from $O(N^2)$, which was the case in the VF algorithm.
+In VF2 algorithm all the vectors that are used to store data have the following property: If an element is assigned a value in a state $s$, it will remain assigned in all states descending from $s$. This property, together with the depth-first strategy of the search is used to avoid the need to store a different copy of the vectors for each state. When the algorithm backtracks, it restores the previous value of the vectors. This was the improvement introduced in the VF2 algorithm. This is illustrated in the Figure \ref{fig:memManagement}. Consider every block to hold the mappings between the base graph and the pattern graph. As can be seen from the figure as one goes down in the tree, a new variable is created for every level, but with restore data structure the same variable is used at every level. When the algorithm has finished traversing all the levels of the search tree, the algorithm without restore data structure will have $N$ variables, whereas one with restore data structure will have only one variable created. Thus reducing the space complexity of the VF2 algorithm to $O(N)$ from $O(N^2)$, which was the case in the VF algorithm.
 
 \begin{figure}[!ht]
 \includegraphics[scale=0.5]{./pics/memManagement.png}
@@ -476,7 +476,7 @@ Computational complexity of the VF2 depends on two factors:
 \item Number of SSR visited.
 \end{itemize}
 
-According to the authors, the former has a computational complexity of $O(N)$ . For the latter the authors consider a best case; where only one of the potential mappings are feasible which makes the computation complexity $O(N)$ and thus making the overall complexity $O(N^2)$. In the worst case, the algorithm has to explore all the states. This can happen when every node is connected to every other node ( the base graph is a complete graph) and the graph exhibits strong symmetry. The authors show that the complexity in such a condition is $O(N!)$ and thus making the total complexity $O(N!N)$.
+According to the \citeauthor{cordella2001improved}, the former has a computational complexity of $O(N)$. For the latter the authors consider a best case; where only one of the potential mappings are feasible which makes the computation complexity $O(N)$ and thus making the overall complexity $O(N^2)$. In the worst case, the algorithm has to explore all the states. This can happen when every node is connected to every other node ( the base graph is a complete graph) and the graph exhibits strong symmetry. The authors show that the complexity in such a condition is $O(N!)$ and thus making the total complexity $O(N!N)$.
 
 The authors compute the computation complexity in the case of an average graph as the reduction in the visited states compared to that of the worst case condition. This reduction is computed using a parameter called $\eta$ which represents the probability of an edge being present between 2 distinct nodes of the graph. The authors show that the average reduction in the number of states visited is:
 \begin{equation*}
@@ -664,7 +664,7 @@ Now if we consider arrangement as shown in the Figure \ref{fig:ntime2} and \ref{
 
 
 \section{Summary}
-In this chapter, we described a method to locate the sensor on the grid making use of sensor data and grid vertices information up-to rotational symmetry. Figure \ref{fig:Summary} gives the summary of steps involved in the form of a flowchart. 
+In this chapter, we described a method to locate the sensor on the grid by using the data from the sensors and grid vertices information up-to rotational symmetry. We show how graph matching technique can be used to obtain the possible mappings between the sensors and grid vertices. Using the correlation values between the sensors we determine a criteria that helps to choose the true arrangement out of the obtained possible arrangements. We also resolve the issue that arises when the grid is either a $n \times 2$ or $2 \times n$ grid using a weighted grid adjacency matrix. Figure \ref{fig:Summary} gives the summary of steps involved in the form of a flowchart. 
 
 \begin{figure}
 \includegraphics[scale=0.49]{./pics/methodSummary.png}

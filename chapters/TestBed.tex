@@ -78,7 +78,7 @@ To test the time synchronization we place two sensor nodes opposite to each othe
 
 \section{Packet Structure}
 In our testbed, we sample our occupancy sensors once every 100ms. Since the data is binary we combine 32 samples and transmit the packet every 3.2s. This decreases the traffic in the sensor network.
-The transmitted packet is an array of one byte. Consisting of 14 bytes of payload. The payload structure is as shown in the Figure \ref{fig:packetStructure}
+The transmitted packet is an array of unsigned integer of size one byte. Consisting of 14 bytes of payload. The payload structure is as shown in the Figure \ref{fig:packetStructure}
 \begin{figure}[!ht]
  \bytefieldsetup{bitheight=3em}
 \begin{bytefield}[bitwidth=2.5em]{14}
@@ -92,12 +92,20 @@ The transmitted packet is an array of one byte. Consisting of 14 bytes of payloa
 \end{figure}
 
 \begin{itemize}
-\item Mac Id - unique identifier for each node.
-\item Packet number- Keeps track of the packets that are being transmitted from a  node. It helps to identify the lost packets as well as repeated packets.
-\item Start time - 4 byte array corresponding to the time of first PIR sample of the PIR sensor in the packet.
-\item End time - 4 byte array corresponding to the time of  the last sample of the PIR sensor in the packet.
-\item Data - 32 samples of the PIR sensor.
+\item Mac Id - unique identifier for each node. Mac Id is used to assign the packets received to the particular node. 
+\item Packet number- Keeps track of the packets that are being transmitted from a  node. It helps to identify the lost packets as well as repeated packets. If two packets from the same node have the same packet number then they are treated as duplicate packets. If there is a packet number missing then we treat that as a lost packet.
+\item Start time - 4 byte array corresponding to the time of first occupancy sensor sample in the packet.  
+\item End time - 4 byte array corresponding to the time of the last occupancy sensor sample in the packet.
+\item Data - 4 byte array which is combined and converted to binary form. This represents 32 samples of the occupancy sensor output. Each sample separated by an interval of 100ms. 
 \end{itemize}
 \section{Data Collection}
-Data was collected for a span of 2 months. During the course of the evaluation, the occupants were notified of data gathering, but were never instructed to behave in any particular way or was there any constrained applied on the activity or the number of people in the room. 
+Data was collected for a span of 2 months. During the course of the evaluation, the occupants were notified of data gathering, but were never instructed to behave in any particular way or was there any constrained applied on the activity or the number of people in the room. All nodes directly communicated to a centrally located AP, which was connected to a laptop which was used to store the data. We collected a total of approximately 120hrs of data. Figure \ref{fig:dataFig} shows a part of the binary data obtained from the testbed.
+\begin{figure}[!ht]
+\includegraphics[width=\textwidth]{./pics/data.png}
+\caption{Binary data obtained from the testbed spanning for 8hrs}
+\centering
+\label{fig:dataFig}
+\end{figure}
+
+
 
